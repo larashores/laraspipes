@@ -44,10 +44,25 @@ public class Main
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "laraspipes" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    // Creates a new Block with the id "laraspipes:example_block", combining the namespace and path
-    public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
-    // Creates a new BlockItem with the id "laraspipes:example_block", combining the namespace and path
-    public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
+    // Register blocks and associated items
+    public static final RegistryObject<Block> PIPE = BLOCKS.register(
+        "item_pipe", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+    );
+    public static final RegistryObject<Item> PIPE_ITEM = ITEMS.register(
+        "item_pipe", () -> new BlockItem(PIPE.get(), new Item.Properties())
+    );
+    public static final RegistryObject<Block> EXTRACTOR = BLOCKS.register(
+            "item_extractor", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+    );
+    public static final RegistryObject<Item> EXTRACTOR_ITEM = ITEMS.register(
+            "item_extractor", () -> new BlockItem(EXTRACTOR.get(), new Item.Properties())
+    );
+    public static final RegistryObject<Block> DEPOSITOR = BLOCKS.register(
+            "item_depositor", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+    );
+    public static final RegistryObject<Item> DEPOSITOR_ITEM = ITEMS.register(
+            "item_depositor", () -> new BlockItem(DEPOSITOR.get(), new Item.Properties())
+    );
 
     // Creates a new food item with the id "laraspipes:example_id", nutrition 1 and saturation 2
     public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
@@ -101,8 +116,11 @@ public class Main
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(EXAMPLE_BLOCK_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(PIPE_ITEM);
+            event.accept(EXTRACTOR_ITEM);
+            event.accept(DEPOSITOR_ITEM);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
