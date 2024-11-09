@@ -8,12 +8,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
 
-public class ItemDepositorEntity extends BlockEntity {
+public class ItemExtractorEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public ItemDepositorEntity(BlockPos pos, BlockState state) {
-        super(Main.DEPOSITOR_ENTITY.get(), pos, state);
-        LOGGER.info("ItemDepositorEntity({}, {})", pos, state);
+    public ItemExtractorEntity(BlockPos pos, BlockState state) {
+        super(Main.EXTRACTOR_ENTITY.get(), pos, state);
+        LOGGER.info("ItemExtractorEntity({}, {})", pos, state);
     }
 
     public void handleTick(Level level, BlockPos pos, BlockState state) {

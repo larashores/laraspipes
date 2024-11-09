@@ -26,7 +26,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-import org.slf4j.event.Level;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MODID)
@@ -52,10 +52,14 @@ public class Main
 
     // Item Extractor
     public static final RegistryObject<Block> EXTRACTOR = BLOCKS.register(
-        "item_extractor", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+        "item_extractor", ItemExtractor::new
     );
     public static final RegistryObject<Item> EXTRACTOR_ITEM = ITEMS.register(
         "item_extractor", () -> new BlockItem(EXTRACTOR.get(), new Item.Properties())
+    );
+    public static final RegistryObject<BlockEntityType<ItemExtractorEntity>> EXTRACTOR_ENTITY = BLOCK_ENTITIES.register(
+        "item_extractor",
+        () -> BlockEntityType.Builder.of(ItemExtractorEntity::new, EXTRACTOR.get()).build(null)
     );
 
     // Item Depositor
