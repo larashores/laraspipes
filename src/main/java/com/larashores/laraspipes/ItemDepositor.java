@@ -42,6 +42,16 @@ public class ItemDepositor extends Block implements EntityBlock {
         BlockEntityType<T> type
     ) {
         LOGGER.info("getTicker({}, {}, {})", level, state, type);
-        return null;
+        if (level.isClientSide) {
+            // We don't have anything to do on the client side
+            return null;
+        } else {
+            // Server side we delegate ticking to our block entity
+            return (lvl, pos, st, blockEntity) -> {
+                if (blockEntity instanceof ItemDepositorEntity be) {
+                    be.handleTick(lvl, pos, st);
+                }
+            };
+        }
     }
 }
