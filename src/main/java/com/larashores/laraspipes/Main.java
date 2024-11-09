@@ -2,14 +2,12 @@ package com.larashores.laraspipes;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,67 +26,62 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import org.slf4j.event.Level;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MODID)
 public class Main
 {
-    // Define mod id in a common place for everything to reference
-    public static final String MODID = "laraspipes";
-    // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "laraspipes" namespace
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    // Create a Deferred Register to hold Items which will all be registered under the "laraspipes" namespace
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "laraspipes" namespace
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    // Register blocks and associated items
+    public static final String MODID = "laraspipes";
+
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(
+        ForgeRegistries.BLOCK_ENTITY_TYPES, MODID
+    );
+
+    // Item Pipe
     public static final RegistryObject<Block> PIPE = BLOCKS.register(
         "item_pipe", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
     );
     public static final RegistryObject<Item> PIPE_ITEM = ITEMS.register(
         "item_pipe", () -> new BlockItem(PIPE.get(), new Item.Properties())
     );
+
+    // Item Extractor
     public static final RegistryObject<Block> EXTRACTOR = BLOCKS.register(
-            "item_extractor", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+        "item_extractor", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
     );
     public static final RegistryObject<Item> EXTRACTOR_ITEM = ITEMS.register(
-            "item_extractor", () -> new BlockItem(EXTRACTOR.get(), new Item.Properties())
+        "item_extractor", () -> new BlockItem(EXTRACTOR.get(), new Item.Properties())
     );
+
+    // Item Depositor
     public static final RegistryObject<Block> DEPOSITOR = BLOCKS.register(
-            "item_depositor", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+        "item_depositor", ItemDepositor::new
     );
     public static final RegistryObject<Item> DEPOSITOR_ITEM = ITEMS.register(
-            "item_depositor", () -> new BlockItem(DEPOSITOR.get(), new Item.Properties())
+        "item_depositor", () -> new BlockItem(DEPOSITOR.get(), new Item.Properties())
+    );
+    public static final RegistryObject<BlockEntityType<ItemDepositorEntity>> DEPOSITOR_ENTITY = BLOCK_ENTITIES.register(
+        "item_depositor",
+        () -> BlockEntityType.Builder.of(ItemDepositorEntity::new, DEPOSITOR.get()).build(null)
     );
 
-    // Creates a new food item with the id "laraspipes:example_id", nutrition 1 and saturation 2
-    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
-            .alwaysEat().nutrition(1).saturationMod(2f).build())));
-
-    // Creates a creative tab with the id "laraspipes:example_tab" for the example item, that is placed after the combat tab
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-            }).build());
 
     public Main()
     {
+
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
-        CREATIVE_MODE_TABS.register(modEventBus);
+        BLOCK_ENTITIES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
