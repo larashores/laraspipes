@@ -8,8 +8,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -44,7 +42,7 @@ public class Main
 
     // Item Pipe
     public static final RegistryObject<Block> PIPE = BLOCKS.register(
-        "item_pipe", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
+        "item_pipe", ItemPipe::new
     );
     public static final RegistryObject<Item> PIPE_ITEM = ITEMS.register(
         "item_pipe", () -> new BlockItem(PIPE.get(), new Item.Properties())

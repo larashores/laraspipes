@@ -20,9 +20,9 @@ public class ItemExtractor extends Block implements EntityBlock {
     public ItemExtractor() {
         super(
             BlockBehaviour.Properties.of()
-                .strength(3.5F)
-                .requiresCorrectToolForDrops()
-                .sound(SoundType.METAL)
+            .strength(3.5F)
+            .requiresCorrectToolForDrops()
+            .sound(SoundType.METAL)
         );
         LOGGER.info("ItemExtractor()");
     }

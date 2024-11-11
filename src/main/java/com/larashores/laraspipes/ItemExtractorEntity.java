@@ -17,11 +17,18 @@ public class ItemExtractorEntity extends BlockEntity {
     }
 
     public void handleTick(Level level, BlockPos pos, BlockState state) {
-        if (level.getGameTime() % 100 == 0) {
+        if (level.getGameTime() % 20 == 0) {
             LOGGER.info("handleTick({}, {}, {})", level, pos, state);
-            var nextToChest = Utils.isChestAdjacent(level, pos);
-            LOGGER.info("nextToChest == {}", nextToChest);
+            var extractChest = Utils.getAdjacentChest(level, pos);
+            if (extractChest != null) {
+                for (var entity : new ItemDepositorEntityIterable(level, pos)) {
+                    var depositPos = entity.getBlockPos();
+                    var depositChest = Utils.getAdjacentChest(level, depositPos);
+                    if (depositChest != null) {
+                        Utils.transferItems(extractChest, depositChest);
+                    }
+                }
+            }
         }
     }
-
 }
