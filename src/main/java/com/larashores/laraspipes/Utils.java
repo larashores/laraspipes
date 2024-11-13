@@ -40,7 +40,6 @@ public class Utils {
     }
 
     public static void transferItems(ChestBlockEntity from, ChestBlockEntity to) {
-        LOGGER.info("transferItems({}, {})", from, to);
         for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
             var fromStack = from.getItem(i);
             for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {

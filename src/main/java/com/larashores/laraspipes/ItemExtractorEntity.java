@@ -18,7 +18,6 @@ public class ItemExtractorEntity extends BlockEntity {
 
     public void handleTick(Level level, BlockPos pos, BlockState state) {
         if (level.getGameTime() % 20 == 0) {
-            LOGGER.info("handleTick({}, {}, {})", level, pos, state);
             var extractChest = Utils.getAdjacentChest(level, pos);
             if (extractChest != null) {
                 for (var entity : new ItemDepositorEntityIterable(level, pos)) {

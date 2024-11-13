@@ -1,7 +1,8 @@
 package com.larashores.laraspipes;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -38,6 +40,9 @@ public class Main
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(
         ForgeRegistries.BLOCK_ENTITY_TYPES, MODID
+    );
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(
+        ForgeRegistries.MENU_TYPES, MODID
     );
 
     // Item Pipe
@@ -71,6 +76,12 @@ public class Main
         "item_depositor",
         () -> BlockEntityType.Builder.of(ItemDepositorEntity::new, DEPOSITOR.get()).build(null)
     );
+    public static final RegistryObject<MenuType<ItemDepositorMenu>> DEPOSITOR_MENU = MENU_TYPES.register(
+        "item_depositor",
+        () -> IForgeMenuType.create(
+            (windowId, inv, data) -> new ItemDepositorMenu(windowId, inv.player, data.readBlockPos())
+        )
+    );
 
 
     public Main()
@@ -84,6 +95,7 @@ public class Main
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
+        MENU_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -133,9 +145,10 @@ public class Main
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            // Item Depositor
+            event.enqueueWork(() -> {
+                MenuScreens.register(DEPOSITOR_MENU.get(), ItemDepositorScreen::new);
+            });
         }
     }
 }
