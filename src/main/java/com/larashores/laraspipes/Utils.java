@@ -2,12 +2,15 @@ package com.larashores.laraspipes;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
+
+import java.util.Set;
 
 public class Utils {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -39,18 +42,20 @@ public class Utils {
         return null;
     }
 
-    public static void transferItems(ChestBlockEntity from, ChestBlockEntity to) {
+    public static void transferItems(Set<Item> filters, ChestBlockEntity from, ChestBlockEntity to) {
         for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
             var fromStack = from.getItem(i);
-            for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
-                var toStack = to.getItem(j);
-                if (toStack.isEmpty()) {
-                    var stack = fromStack.copyAndClear();
-                    to.setItem(j, stack);
-                } else if (fromStack.getItem() == toStack.getItem() && fromStack.getTag() == toStack.getTag()) {
-                    var count = Math.min(fromStack.getCount(), toStack.getMaxStackSize() - toStack.getCount());
-                    toStack.grow(count);
-                    fromStack.shrink(count);
+            if (filters.contains(fromStack.getItem())) {
+                for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
+                    var toStack = to.getItem(j);
+                    if (toStack.isEmpty()) {
+                        var stack = fromStack.copyAndClear();
+                        to.setItem(j, stack);
+                    } else if (fromStack.getItem() == toStack.getItem() && fromStack.getTag() == toStack.getTag()) {
+                        var count = Math.min(fromStack.getCount(), toStack.getMaxStackSize() - toStack.getCount());
+                        toStack.grow(count);
+                        fromStack.shrink(count);
+                    }
                 }
             }
         }

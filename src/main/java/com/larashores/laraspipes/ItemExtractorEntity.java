@@ -24,7 +24,7 @@ public class ItemExtractorEntity extends BlockEntity {
                     var depositPos = entity.getBlockPos();
                     var depositChest = Utils.getAdjacentChest(level, depositPos);
                     if (depositChest != null) {
-                        Utils.transferItems(extractChest, depositChest);
+                        Utils.transferItems(entity.getFilters(), extractChest, depositChest);
                     }
                 }
             }
