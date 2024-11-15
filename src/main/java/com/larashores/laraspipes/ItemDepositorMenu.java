@@ -7,7 +7,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.SlotItemHandler;
 import org.slf4j.Logger;
 
 
@@ -26,7 +25,7 @@ public class ItemDepositorMenu extends AbstractContainerMenu {
                 for (var col = 0; col < 9; col++) {
                     var x = 8 + col * 18;
                     var y = 17 + row * 18;
-                    addSlot(new SlotItemHandler(entity.filters, row * 9 + col, x, y));
+                    addSlot(new ItemDepositorSlot(entity.filters, row * 9 + col, x, y));
                 }
             }
         }

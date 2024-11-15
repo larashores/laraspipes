@@ -15,7 +15,7 @@ public class ItemDepositorItemStackHandler extends ItemStackHandler {
 
     @Override
     protected void onContentsChanged(int slot) {
+//        LOGGER.info("onContentsChanged({})", slot);
         entity.setChanged();
-        LOGGER.info("onContentsChanged({})", slot);
     }
 }
