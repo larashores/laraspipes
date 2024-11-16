@@ -9,6 +9,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
+
 
 public class ItemDepositorMenu extends AbstractContainerMenu {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -47,10 +49,31 @@ public class ItemDepositorMenu extends AbstractContainerMenu {
         }
     }
 
+    @Nonnull
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         LOGGER.info("quickMoveStack({}, {})", player, index);
-        return null;
+        var slot = getSlot(index);
+        if (index < 6 * 9) {
+            slot.tryRemove(1, Integer.MAX_VALUE, player);
+        } else if (slot.hasItem()){
+            var item = slot.getItem();
+            if (
+                player.level().getBlockEntity(pos) instanceof ItemDepositorEntity entity
+                && !entity.getFilters().contains(item.getItem())
+            ) {
+                outerLoop: for (var row = 0; row < 6; row++) {
+                    for (var col = 0; col < 9; col++) {
+                        var filter = getSlot(row * 9 + col);
+                        if (!filter.hasItem()) {
+                            filter.safeInsert(item, 1);
+                            break outerLoop;
+                        }
+                    }
+                }
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     @Override
