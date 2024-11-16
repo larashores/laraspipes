@@ -21,6 +21,12 @@ public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMe
     }
 
     @Override
+    public void render(GuiGraphics graphics, int x, int y, float partialTicks) {
+        super.render(graphics, x, y, partialTicks);
+        renderTooltip(graphics, x, y);
+    }
+
+    @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
