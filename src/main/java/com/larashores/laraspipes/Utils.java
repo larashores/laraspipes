@@ -2,12 +2,12 @@ package com.larashores.laraspipes;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
 import java.util.Set;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class Utils {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static ChestBlockEntity getAdjacentChest(Level level, BlockPos pos) {
+    public static Container getAdjacentChest(Level level, BlockPos pos) {
         // Define the positions of the six adjacent blocks
         BlockPos[] adjacentPositions = new BlockPos[]{
             pos.north(),
@@ -28,21 +28,23 @@ public class Utils {
 
         // Check each adjacent block
         for (BlockPos adjacentPos : adjacentPositions) {
-            BlockState blockState = level.getBlockState(adjacentPos);
+            var blockEntity = level.getBlockEntity(adjacentPos);
+            var blockState = level.getBlockState(adjacentPos);
+            var block = blockState.getBlock();
 
             // Check if the adjacent block is a chest
-            if (blockState.is(Blocks.CHEST)) {
-                // Optionally, verify it's a chest with a BlockEntity (to ensure it's not a custom block)
-                BlockEntity blockEntity = level.getBlockEntity(adjacentPos);
-                if (blockEntity instanceof ChestBlockEntity chestBlockEntity) {
-                    return chestBlockEntity;
-                }
+            if (
+                blockState.is(Blocks.CHEST)
+                && blockEntity instanceof ChestBlockEntity chestBlockEntity
+                && block instanceof ChestBlock chestBlock
+            ) {
+                return ChestBlock.getContainer(chestBlock, blockState, level, adjacentPos, false);
             }
         }
         return null;
     }
 
-    public static void transferItems(Set<Item> filters, ChestBlockEntity from, ChestBlockEntity to) {
+    public static void transferItems(Set<Item> filters, Container from, Container to) {
         for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
             var fromStack = from.getItem(i);
             if (filters.contains(fromStack.getItem())) {
