@@ -1,5 +1,6 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itemdepositor;
 
+import com.larashores.laraspipes.Registration;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,12 +16,27 @@ import java.util.Set;
 
 public class ItemDepositorEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final String  FILTER_TAG = "filters";
-    public final ItemStackHandler filters = new ItemDepositorItemStackHandler(this, 6 * 9);
+    private static final String TAG_FILTERS = "filters";
+    public final ItemStackHandler filters = new ItemDepositorHandler(this, 6 * 9);
 
     public ItemDepositorEntity(BlockPos pos, BlockState state) {
-        super(Main.DEPOSITOR_ENTITY.get(), pos, state);
+        super(Registration.DEPOSITOR_ENTITY.get(), pos, state);
         LOGGER.info("ItemDepositorEntity({}, {})", pos, state);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains(TAG_FILTERS)) {
+            filters.deserializeNBT(tag.getCompound(TAG_FILTERS));
+        }
+
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put(TAG_FILTERS, filters.serializeNBT());
     }
 
     public Set<Item> getFilters() {
@@ -32,20 +48,5 @@ public class ItemDepositorEntity extends BlockEntity {
             }
         }
         return items;
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        if (tag.contains(FILTER_TAG)) {
-            filters.deserializeNBT(tag.getCompound(FILTER_TAG));
-        }
-
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.put(FILTER_TAG, filters.serializeNBT());
     }
 }

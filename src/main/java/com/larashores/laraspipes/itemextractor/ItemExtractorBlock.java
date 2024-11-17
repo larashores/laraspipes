@@ -1,4 +1,4 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itemextractor;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -14,14 +14,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-public class ItemExtractor extends Block implements EntityBlock {
+public class ItemExtractorBlock extends Block implements EntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public ItemExtractor() {
+    public ItemExtractorBlock() {
         super(
             BlockBehaviour.Properties.of()
             .strength(3.5F)
-            .requiresCorrectToolForDrops()
             .sound(SoundType.METAL)
         );
         LOGGER.info("ItemExtractor()");
@@ -43,13 +42,11 @@ public class ItemExtractor extends Block implements EntityBlock {
     ) {
         LOGGER.info("getTicker({}, {}, {})", level, state, type);
         if (level.isClientSide) {
-            // We don't have anything to do on the client side
             return null;
         } else {
-            // Server side we delegate ticking to our block entity
             return (lvl, pos, st, blockEntity) -> {
                 if (blockEntity instanceof ItemExtractorEntity be) {
-                    be.handleTick(lvl, pos, st);
+                    be.handleTick(lvl, pos);
                 }
             };
         }

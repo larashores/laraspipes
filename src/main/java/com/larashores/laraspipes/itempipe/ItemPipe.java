@@ -1,4 +1,4 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itempipe;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;

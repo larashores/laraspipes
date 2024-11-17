@@ -1,4 +1,4 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.utils;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.entity.player.Player;
@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 
 import java.util.Optional;
 
-public class ItemDepositorSlot extends SlotItemHandler {
+public class ItemTypeSlot extends SlotItemHandler {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public ItemDepositorSlot(IItemHandler handler, int index, int xPosition, int yPosition) {
+    public ItemTypeSlot(IItemHandler handler, int index, int xPosition, int yPosition) {
         super(handler, index, xPosition, yPosition);
     }
 

@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package com.larashores.laraspipes.itemextractor;
+
+import javax.annotation.ParametersAreNonnullByDefault;

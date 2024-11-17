@@ -1,5 +1,8 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itemextractor;
 
+import com.larashores.laraspipes.Registration;
+import com.larashores.laraspipes.utils.ItemDepositorEntityIterable;
+import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -12,11 +15,11 @@ public class ItemExtractorEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemExtractorEntity(BlockPos pos, BlockState state) {
-        super(Main.EXTRACTOR_ENTITY.get(), pos, state);
+        super(Registration.EXTRACTOR_ENTITY.get(), pos, state);
         LOGGER.info("ItemExtractorEntity({}, {})", pos, state);
     }
 
-    public void handleTick(Level level, BlockPos pos, BlockState state) {
+    public void handleTick(Level level, BlockPos pos) {
         if (level.getGameTime() % 20 == 0) {
             var extractChest = Utils.getAdjacentChest(level, pos);
             if (extractChest != null) {

@@ -1,4 +1,4 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.utils;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import java.util.Set;
 
 public class Utils {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static Container getAdjacentChest(Level level, BlockPos pos) {
@@ -35,7 +36,7 @@ public class Utils {
             // Check if the adjacent block is a chest
             if (
                 blockState.is(Blocks.CHEST)
-                && blockEntity instanceof ChestBlockEntity chestBlockEntity
+                && blockEntity instanceof ChestBlockEntity
                 && block instanceof ChestBlock chestBlock
             ) {
                 return ChestBlock.getContainer(chestBlock, blockState, level, adjacentPos, false);
