@@ -1,5 +1,9 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.utils;
 
+import com.larashores.laraspipes.itemdepositor.ItemDepositorBlock;
+import com.larashores.laraspipes.itemdepositor.ItemDepositorEntity;
+import com.larashores.laraspipes.itemextractor.ItemExtractorBlock;
+import com.larashores.laraspipes.itempipe.ItemPipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
@@ -40,8 +44,8 @@ public class ItemDepositorEntityIterator implements Iterator<ItemDepositorEntity
 
                     if (
                         block instanceof ItemPipe ||
-                        block instanceof ItemExtractor ||
-                        block instanceof ItemDepositor
+                        block instanceof ItemExtractorBlock ||
+                        block instanceof ItemDepositorBlock
                     ) {
                         positionQueue.add(position);
                     }

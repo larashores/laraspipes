@@ -1,5 +1,6 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.utils;
 
+import com.larashores.laraspipes.itemdepositor.ItemDepositorEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;

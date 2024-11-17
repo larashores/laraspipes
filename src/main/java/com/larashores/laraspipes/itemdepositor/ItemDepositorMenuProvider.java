@@ -1,4 +1,4 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itemdepositor;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
+
 public class ItemDepositorMenuProvider implements MenuProvider {
     private static final Logger LOGGER = LogUtils.getLogger();
     private final BlockPos pos;
@@ -18,6 +20,7 @@ public class ItemDepositorMenuProvider implements MenuProvider {
         this.pos = pos;
     }
 
+    @Nonnull
     @Override
     public Component getDisplayName() {
         return Component.translatable("Item Depositor");

@@ -1,4 +1,4 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itemdepositor;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -18,17 +18,18 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-public class ItemDepositor extends Block implements EntityBlock {
+import javax.annotation.Nonnull;
+
+public class ItemDepositorBlock extends Block implements EntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public ItemDepositor() {
+    public ItemDepositorBlock() {
         super(
             BlockBehaviour.Properties.of()
             .strength(3.5F)
-            .requiresCorrectToolForDrops()
             .sound(SoundType.METAL)
         );
-        LOGGER.info("ItemDepositor()");
+        LOGGER.info("ItemDepositorBlock()");
     }
 
     @Nullable
@@ -38,7 +39,9 @@ public class ItemDepositor extends Block implements EntityBlock {
         return new ItemDepositorEntity(pos, state);
     }
 
+    @Nonnull
     @Override
+    @SuppressWarnings("deprecation")
     public InteractionResult use(
         BlockState state,
         Level level,
@@ -49,15 +52,12 @@ public class ItemDepositor extends Block implements EntityBlock {
     ) {
         LOGGER.info("use({}, {}, {}, {}, {}, {})", state, level, pos, player, hand, trace);
         if (!level.isClientSide) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof ItemDepositorEntity) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            if (entity != null) {
                 var menuProvider = new ItemDepositorMenuProvider(pos);
-                NetworkHooks.openScreen((ServerPlayer) player, menuProvider, be.getBlockPos());
-            } else {
-                throw new IllegalStateException("Our named container provider is missing!");
+                NetworkHooks.openScreen((ServerPlayer) player, menuProvider, entity.getBlockPos());
             }
         }
         return InteractionResult.PASS;
     }
-
 }

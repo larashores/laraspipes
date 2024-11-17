@@ -1,5 +1,6 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.itemdepositor;
 
+import com.larashores.laraspipes.Main;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -10,7 +11,7 @@ import org.slf4j.Logger;
 
 public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMenu> {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private final ResourceLocation GUI = new ResourceLocation(Main.MODID, "textures/gui/item_depositor.png");
+    private final ResourceLocation GUI = new ResourceLocation(Main.MOD_ID, "textures/gui/item_depositor.png");
 
     public ItemDepositorScreen(ItemDepositorMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -32,4 +33,4 @@ public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMe
         int relY = (this.height - this.imageHeight) / 2;
         graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
     }
-};
+}
