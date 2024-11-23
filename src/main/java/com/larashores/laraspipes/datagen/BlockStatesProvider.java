@@ -2,6 +2,7 @@ package com.larashores.laraspipes.datagen;
 
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.Registration;
+import com.larashores.laraspipes.itemdepositor.ItemDepositorModels;
 import com.larashores.laraspipes.itemextractor.ItemExtractorModels;
 import com.larashores.laraspipes.itempipe.ItemPipeModels;
 import net.minecraft.data.PackOutput;
@@ -18,6 +19,10 @@ public class BlockStatesProvider extends BlockStateProvider {
         ItemExtractorModels.register(
             models(),
             getMultipartBuilder(Registration.EXTRACTOR.get())
+        );
+        ItemDepositorModels.register(
+            models(),
+            getMultipartBuilder(Registration.DEPOSITOR.get())
         );
         ItemPipeModels.register(
             models(),
