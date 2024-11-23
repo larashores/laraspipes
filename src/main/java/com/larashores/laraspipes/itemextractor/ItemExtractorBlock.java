@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 
+import static com.larashores.laraspipes.Registration.*;
+
 public class ItemExtractorBlock extends Block implements EntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -80,10 +82,21 @@ public class ItemExtractorBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var facing = context.getNearestLookingDirection();
         var state = defaultBlockState();
-        state.setValue(BlockStateProperties.FACING, context.getNearestLookingDirection());
-        for (var property : CONNECTED.values()) {
-            state.setValue(property, true);
+        state = state.setValue(BlockStateProperties.FACING, facing);
+        var level = context.getLevel();
+        var pos = context.getClickedPos();
+        for (var direction: Direction.values()) {
+            var property = CONNECTED.get(direction);
+            var adjacentPos = pos.relative(direction);
+            var adjacentState = level.getBlockState(adjacentPos);
+            var connected = direction != facing && (
+                adjacentState.is(PIPE.get())
+                || adjacentState.is(DEPOSITOR.get())
+                || adjacentState.is(EXTRACTOR.get())
+            );
+            state = state.setValue(property, connected);
         }
         return state;
     }
