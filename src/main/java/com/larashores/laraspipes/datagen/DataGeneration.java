@@ -1,6 +1,6 @@
-package com.larashores.laraspipes;
+package com.larashores.laraspipes.datagen;
 
-import com.larashores.laraspipes.datagen.BlockStatesProvider;
+import com.larashores.laraspipes.Main;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
@@ -17,6 +17,14 @@ public class DataGeneration {
         generator.addProvider(
             event.includeClient(),
             new BlockStatesProvider(packOutput, event.getExistingFileHelper())
+        );
+        generator.addProvider(
+            event.includeClient(),
+            new ItemModelsProvider(packOutput, event.getExistingFileHelper())
+        );
+        generator.addProvider(
+            event.includeClient(),
+            new LanguagesProvider(packOutput, "en_us")
         );
     }
 }

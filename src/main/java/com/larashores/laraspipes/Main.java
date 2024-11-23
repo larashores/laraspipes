@@ -1,5 +1,6 @@
 package com.larashores.laraspipes;
 
+import com.larashores.laraspipes.datagen.DataGeneration;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorScreen;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
