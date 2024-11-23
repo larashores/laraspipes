@@ -1,6 +1,6 @@
 package com.larashores.laraspipes;
 
-import com.larashores.laraspipes.itemextractor.ItemExtractorBlockStates;
+import com.larashores.laraspipes.datagen.BlockStatesProvider;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class DataGeneration {
 
         generator.addProvider(
             event.includeClient(),
-            new ItemExtractorBlockStates(packOutput, event.getExistingFileHelper())
+            new BlockStatesProvider(packOutput, event.getExistingFileHelper())
         );
     }
 }
