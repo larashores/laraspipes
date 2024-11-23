@@ -31,8 +31,8 @@ public class Main
     {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the commonSetup method for modloading
         eventBus.addListener(this::commonSetup);
+        eventBus.addListener(DataGeneration::generate);
 
         Registration.register(eventBus);
 
