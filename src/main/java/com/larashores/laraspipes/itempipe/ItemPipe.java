@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 
+import static com.larashores.laraspipes.Registration.*;
+
 
 public class ItemPipe extends Block {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -48,8 +50,18 @@ public class ItemPipe extends Block {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         var state = defaultBlockState();
-        for (var property : CONNECTED.values()) {
-            state.setValue(property, true);
+        var level = context.getLevel();
+        var pos = context.getClickedPos();
+        for (var direction: Direction.values()) {
+            var property = CONNECTED.get(direction);
+            var adjacentPos = pos.relative(direction);
+            var adjacentState = level.getBlockState(adjacentPos);
+            var connected = (
+                adjacentState.is(PIPE.get())
+                || adjacentState.is(DEPOSITOR.get())
+                || adjacentState.is(EXTRACTOR.get())
+            );
+            state = state.setValue(property, connected);
         }
         return state;
     }
