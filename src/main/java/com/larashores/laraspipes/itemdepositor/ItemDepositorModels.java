@@ -37,10 +37,16 @@ public class ItemDepositorModels {
                         faceBuilder.texture("#front");
                     } else if (direction == Direction.NORTH) {
                         faceBuilder.texture("#back");
-                    } else if (direction == Direction.UP || direction == Direction.DOWN) {
+                    } else if (direction == Direction.UP) {
+                        faceBuilder.uvs(0, 10, 14, 16);
+                        faceBuilder.texture("#vertical");
+                    } else if (direction == Direction.DOWN) {
                         faceBuilder.uvs(0, 0, 14, 6);
                         faceBuilder.texture("#vertical");
-                    } else if (direction == Direction.EAST || direction == Direction.WEST) {
+                    } else if (direction == Direction.WEST) {
+                        faceBuilder.uvs(10, 0, 16, 14);
+                        faceBuilder.texture("#horizontal");
+                    } else if (direction == Direction.EAST) {
                         faceBuilder.uvs(0, 0, 6, 14);
                         faceBuilder.texture("#horizontal");
                     }
