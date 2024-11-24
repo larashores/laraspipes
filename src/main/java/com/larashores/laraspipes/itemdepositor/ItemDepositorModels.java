@@ -21,6 +21,7 @@ public class ItemDepositorModels {
         frontModeBuilder.texture("back", Main.MOD_ID + ":block/" + path + "_back");
         frontModeBuilder.texture("front", Main.MOD_ID + ":block/" + path + "_front");
         frontModeBuilder.texture("pipe", Main.MOD_ID + ":block/" + path + "_pipe");
+        frontModeBuilder.texture("particle", Main.MOD_ID + ":block/" + path + "_pipe");
         frontModeBuilder.texture("vertical", Main.MOD_ID + ":block/" + path + "_side_vertical");
         frontModeBuilder.texture("horizontal", Main.MOD_ID + ":block/" + path + "_side_horizontal");
         frontModeBuilder.element()
@@ -57,6 +58,7 @@ public class ItemDepositorModels {
         var sideBuilder = models.getBuilder("block/" + path + "_side");
         sideBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
         sideBuilder.texture("pipe", Main.MOD_ID + ":block/" + path + "_pipe");
+        frontModeBuilder.texture("particle", Main.MOD_ID + ":block/" + path + "_pipe");
         sideBuilder.element()
             .from(5, 5, 11)
             .to(11, 11, 16)
