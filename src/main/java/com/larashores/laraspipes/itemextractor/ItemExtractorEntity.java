@@ -1,17 +1,17 @@
 package com.larashores.laraspipes.itemextractor;
 
 import com.larashores.laraspipes.Registration;
-import com.larashores.laraspipes.utils.ItemDepositorEntityIterable;
+import com.larashores.laraspipes.itemdepositor.ItemDepositorEntity;
+import com.larashores.laraspipes.network.PipeNetworkEntity;
 import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
 
-public class ItemExtractorEntity extends BlockEntity {
+public class ItemExtractorEntity extends PipeNetworkEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemExtractorEntity(BlockPos pos, BlockState state) {
@@ -22,12 +22,15 @@ public class ItemExtractorEntity extends BlockEntity {
     public void handleTick(Level level, BlockPos pos) {
         if (level.getGameTime() % 20 == 0) {
             var extractChest = Utils.getAdjacentChest(level, pos);
-            if (extractChest != null) {
-                for (var entity : new ItemDepositorEntityIterable(level, pos)) {
-                    var depositPos = entity.getBlockPos();
-                    var depositChest = Utils.getAdjacentChest(level, depositPos);
-                    if (depositChest != null) {
-                        Utils.transferItems(entity.getFilters(), extractChest, depositChest);
+            if (extractChest != null && !extractChest.isEmpty()) {
+                var network = getOrCreateNetwork(level, pos);
+                for (var entity : network.entities) {
+                    if (entity instanceof ItemDepositorEntity itemDepositorEntity) {
+                        var depositPos = entity.getBlockPos();
+                        var depositChest = Utils.getAdjacentChest(level, depositPos);
+                        if (depositChest != null) {
+                            Utils.transferItems(itemDepositorEntity.getFilters(), extractChest, depositChest);
+                        }
                     }
                 }
             }

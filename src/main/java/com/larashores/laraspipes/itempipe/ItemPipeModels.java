@@ -43,7 +43,7 @@ public class ItemPipeModels{
                 .rotationX(rotation.x())
                 .rotationY(rotation.y())
                 .addModel()
-                .condition(ItemPipe.CONNECTED.get(direction), true);
+                .condition(ItemPipeBlock.CONNECTED.get(direction), true);
         }
     }
 }

@@ -2,7 +2,7 @@ package com.larashores.laraspipes.utils;
 
 import com.larashores.laraspipes.itemdepositor.ItemDepositorBlock;
 import com.larashores.laraspipes.itemextractor.ItemExtractorBlock;
-import com.larashores.laraspipes.itempipe.ItemPipe;
+import com.larashores.laraspipes.itempipe.ItemPipeBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import org.slf4j.Logger;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class Utils {
@@ -82,8 +84,8 @@ public class Utils {
         for (Direction direction : Direction.values()) {
             var neighborPos = pos.relative(direction);
             var neighborState = level.getBlockState(neighborPos);
-            if (neighborState.getBlock() instanceof ItemPipe) {
-                neighborState = ItemPipe.setConnectionStates(level, neighborPos, neighborState);
+            if (neighborState.getBlock() instanceof ItemPipeBlock) {
+                neighborState = ItemPipeBlock.setConnectionStates(level, neighborPos, neighborState);
             } else if (neighborState.getBlock() instanceof ItemExtractorBlock) {
                 neighborState = ItemExtractorBlock.setConnectionStates(level, neighborPos, neighborState);
             } else if (neighborState.getBlock() instanceof ItemDepositorBlock) {
@@ -91,5 +93,9 @@ public class Utils {
             }
             level.setBlock(neighborPos, neighborState, Block.UPDATE_ALL);
         }
+    }
+
+    public static List<BlockPos> getAdjacentBlockPositions(BlockPos pos) {
+        return Arrays.asList(pos.north(), pos.south(), pos.east(), pos.west(), pos.above(), pos.below());
     }
 }

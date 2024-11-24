@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +25,7 @@ import java.util.Map;
 import static com.larashores.laraspipes.Registration.*;
 
 
-public class ItemPipe extends Block {
+public class ItemPipeBlock extends Block implements EntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Map<Direction, BooleanProperty> CONNECTED = Map.of(
@@ -36,7 +37,7 @@ public class ItemPipe extends Block {
         Direction.DOWN, BooleanProperty.create("down")
     );
 
-    public ItemPipe() {
+    public ItemPipeBlock() {
         super(
             BlockBehaviour.Properties.of()
             .noOcclusion()
@@ -45,6 +46,12 @@ public class ItemPipe extends Block {
         LOGGER.info("ItemPipe()");
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        LOGGER.info("newBlockEntity({}, {})", pos, state);
+        return new ItemPipeEntity(pos, state);
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

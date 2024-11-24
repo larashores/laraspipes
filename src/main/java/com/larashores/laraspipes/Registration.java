@@ -5,7 +5,8 @@ import com.larashores.laraspipes.itemdepositor.ItemDepositorEntity;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorMenu;
 import com.larashores.laraspipes.itemextractor.ItemExtractorBlock;
 import com.larashores.laraspipes.itemextractor.ItemExtractorEntity;
-import com.larashores.laraspipes.itempipe.ItemPipe;
+import com.larashores.laraspipes.itempipe.ItemPipeBlock;
+import com.larashores.laraspipes.itempipe.ItemPipeEntity;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -29,10 +30,15 @@ public class Registration {
 
     // Item Pipe
     public static final RegistryObject<Block> PIPE = BLOCKS.register(
-        "item_pipe", ItemPipe::new
+        "item_pipe", ItemPipeBlock::new
     );
     public static final RegistryObject<Item> PIPE_ITEM = ITEMS.register(
         "item_pipe", () -> new BlockItem(PIPE.get(), new Item.Properties())
+    );
+    @SuppressWarnings("ConstantConditions")
+    public static final RegistryObject<BlockEntityType<ItemPipeEntity>> PIPE_ENTITY = BLOCK_ENTITIES.register(
+        "item_pipe",
+        () -> BlockEntityType.Builder.of(ItemPipeEntity::new, PIPE.get()).build(null)
     );
 
     // Item Extractor

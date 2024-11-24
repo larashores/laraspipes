@@ -1,11 +1,11 @@
 package com.larashores.laraspipes.itemdepositor;
 
 import com.larashores.laraspipes.Registration;
+import com.larashores.laraspipes.network.PipeNetworkEntity;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class ItemDepositorEntity extends BlockEntity {
+public class ItemDepositorEntity extends PipeNetworkEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String TAG_FILTERS = "filters";
     public final ItemStackHandler filters = new ItemDepositorHandler(this, 6 * 9);
