@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
@@ -73,8 +74,13 @@ public class ItemPipe extends Block {
             var adjacentState = level.getBlockState(adjacentPos);
             var connected = (
                 adjacentState.is(PIPE.get())
-                || adjacentState.is(DEPOSITOR.get())
-                || adjacentState.is(EXTRACTOR.get())
+                || (
+                    adjacentState.is(DEPOSITOR.get())
+                    && direction.getOpposite() != adjacentState.getValue(BlockStateProperties.FACING)
+                ) || (
+                    adjacentState.is(EXTRACTOR.get())
+                    && direction.getOpposite() != adjacentState.getValue(BlockStateProperties.FACING)
+                )
             );
             state = state.setValue(property, connected);
         }

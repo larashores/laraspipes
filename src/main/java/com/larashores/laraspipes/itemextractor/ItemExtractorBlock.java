@@ -94,10 +94,15 @@ public class ItemExtractorBlock extends Block implements EntityBlock {
             var property = CONNECTED.get(direction);
             var adjacentPos = pos.relative(direction);
             var adjacentState = level.getBlockState(adjacentPos);
-            var connected = direction != state.getValue(BlockStateProperties.FACING) && (
+            var connected = (
                 adjacentState.is(PIPE.get())
-                || adjacentState.is(DEPOSITOR.get())
-                || adjacentState.is(EXTRACTOR.get())
+                || (
+                    adjacentState.is(DEPOSITOR.get())
+                        && direction.getOpposite() != adjacentState.getValue(BlockStateProperties.FACING)
+                ) || (
+                    adjacentState.is(EXTRACTOR.get())
+                        && direction.getOpposite() != adjacentState.getValue(BlockStateProperties.FACING)
+                )
             );
             state = state.setValue(property, connected);
         }
