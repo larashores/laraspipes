@@ -91,8 +91,16 @@ public class ItemDepositorBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var level = context.getLevel();
+        var pos = context.getClickedPos();
+        var direction = context.getNearestLookingDirection();
+        var adjPos = pos.relative(direction);
+        var adjState = level.getBlockState(adjPos);
+        if (adjState.is(PIPE.get()) || adjState.is(EXTRACTOR.get()) || adjState.is(DEPOSITOR.get())) {
+            direction = direction.getOpposite();
+        }
         var state = defaultBlockState();
-        state = state.setValue(BlockStateProperties.FACING, context.getNearestLookingDirection());
+        state = state.setValue(BlockStateProperties.FACING, direction);
         state = setConnectionStates(context.getLevel(), context.getClickedPos(), state);
         return state;
     }
