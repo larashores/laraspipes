@@ -1,5 +1,6 @@
 package com.larashores.laraspipes.itemextractor;
 
+import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -82,16 +83,18 @@ public class ItemExtractorBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        var facing = context.getNearestLookingDirection();
         var state = defaultBlockState();
-        state = state.setValue(BlockStateProperties.FACING, facing);
-        var level = context.getLevel();
-        var pos = context.getClickedPos();
+        state = state.setValue(BlockStateProperties.FACING, context.getNearestLookingDirection());
+        state = setConnectionStates(context.getLevel(), context.getClickedPos(), state);
+        return state;
+    }
+
+    public static BlockState setConnectionStates(Level level, BlockPos pos, BlockState state) {
         for (var direction: Direction.values()) {
             var property = CONNECTED.get(direction);
             var adjacentPos = pos.relative(direction);
             var adjacentState = level.getBlockState(adjacentPos);
-            var connected = direction != facing && (
+            var connected = direction != state.getValue(BlockStateProperties.FACING) && (
                 adjacentState.is(PIPE.get())
                 || adjacentState.is(DEPOSITOR.get())
                 || adjacentState.is(EXTRACTOR.get())
@@ -99,5 +102,19 @@ public class ItemExtractorBlock extends Block implements EntityBlock {
             state = state.setValue(property, connected);
         }
         return state;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean isMoving) {
+        super.onPlace(state, level, pos, old, isMoving);
+        Utils.setAdjacentBlockStates(level, pos);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState old, boolean isMoving) {
+        super.onRemove(state, level, pos, old, isMoving);
+        Utils.setAdjacentBlockStates(level, pos);
     }
 }
