@@ -1,11 +1,15 @@
 package com.larashores.laraspipes.utils;
 
+import com.larashores.laraspipes.itemdepositor.ItemDepositorBlock;
+import com.larashores.laraspipes.itemextractor.ItemExtractorBlock;
+import com.larashores.laraspipes.itempipe.ItemPipe;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -72,5 +76,20 @@ public class Utils {
             direction == Direction.UP ? 90 : direction == Direction.DOWN ? -90 : 0,
             direction.getAxis().isVertical() ? 0 : (int) direction.toYRot() % 360
         );
+    }
+
+    public static void setAdjacentBlockStates(Level level, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            var neighborPos = pos.relative(direction);
+            var neighborState = level.getBlockState(neighborPos);
+            if (neighborState.getBlock() instanceof ItemPipe) {
+                neighborState = ItemPipe.setConnectionStates(level, neighborPos, neighborState);
+            } else if (neighborState.getBlock() instanceof ItemExtractorBlock) {
+                neighborState = ItemExtractorBlock.setConnectionStates(level, neighborPos, neighborState);
+            } else if (neighborState.getBlock() instanceof ItemDepositorBlock) {
+                neighborState = ItemDepositorBlock.setConnectionStates(level, neighborPos, neighborState);
+            }
+            level.setBlock(neighborPos, neighborState, Block.UPDATE_ALL);
+        }
     }
 }
