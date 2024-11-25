@@ -10,9 +10,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -92,15 +90,29 @@ public class ItemDepositorBlock extends Block implements EntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         var level = context.getLevel();
+        var player = context.getPlayer();
         var pos = context.getClickedPos();
-        var direction = context.getNearestLookingDirection();
-        var adjPos = pos.relative(direction);
-        var adjState = level.getBlockState(adjPos);
-        if (adjState.is(PIPE.get()) || adjState.is(EXTRACTOR.get()) || adjState.is(DEPOSITOR.get())) {
-            direction = direction.getOpposite();
+        var facing = context.getNearestLookingDirection();
+        if (player != null && !player.isShiftKeyDown()) {
+            for (var direction : Utils.getDirections(facing)) {
+                var adjPos = pos.relative(direction);
+                var adjState = level.getBlockState(adjPos);
+                if (adjState.is(PIPE.get()) || adjState.is(EXTRACTOR.get()) || adjState.is(DEPOSITOR.get())) {
+                    facing = direction.getOpposite();
+                    break;
+                }
+            }
+            for (var direction : Utils.getDirections(facing)) {
+                var adjPos = pos.relative(direction);
+                var adjState = level.getBlockState(adjPos);
+                if (adjState.is(Blocks.CHEST)) {
+                    facing = direction;
+                    break;
+                }
+            }
         }
         var state = defaultBlockState();
-        state = state.setValue(BlockStateProperties.FACING, direction);
+        state = state.setValue(BlockStateProperties.FACING, facing);
         state = setConnectionStates(context.getLevel(), context.getClickedPos(), state);
         return state;
     }

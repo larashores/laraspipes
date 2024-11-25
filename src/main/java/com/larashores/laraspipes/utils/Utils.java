@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -89,5 +90,18 @@ public class Utils {
 
     public static List<BlockPos> getAdjacentBlockPositions(BlockPos pos) {
         return Arrays.asList(pos.north(), pos.south(), pos.east(), pos.west(), pos.above(), pos.below());
+    }
+
+    public static List<Direction> getDirections(Direction direction) {
+        var directions = new ArrayList<Direction>();
+        directions.add(direction);
+        for (var axis : Direction.Axis.values()) {
+            if (axis != direction.getAxis()) {
+                directions.add(direction.getClockWise(axis));
+                directions.add(direction.getCounterClockWise(axis));
+            }
+        }
+        directions.add(direction.getOpposite());
+        return directions;
     }
 }
