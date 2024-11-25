@@ -2,6 +2,7 @@ package com.larashores.laraspipes.network;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -44,19 +45,24 @@ public abstract class PipeNetworkEntity extends BlockEntity {
 
     @Override
     public void onLoad() {
-        LOGGER.info("onLoad() ({})", worldPosition);
         super.onLoad();
         PipeNetwork.discover(level, worldPosition);
     }
 
     @Override
     public void setRemoved() {
-        LOGGER.info("setRemoved() ({})", worldPosition);
         super.setRemoved();
         var network = getNetwork();
         if (network != null) {
             network.clear();
         }
-        LOGGER.info("  network == {}", this.network);
+    }
+
+    public boolean acceptsItems() {
+        return false;
+    }
+
+    public void transferItems(Level level, Container from) {
+
     }
 }

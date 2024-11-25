@@ -2,10 +2,13 @@ package com.larashores.laraspipes.itemdepositor;
 
 import com.larashores.laraspipes.Registration;
 import com.larashores.laraspipes.network.PipeNetworkEntity;
+import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 import org.slf4j.Logger;
@@ -48,5 +51,18 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
             }
         }
         return items;
+    }
+
+    @Override
+    public boolean acceptsItems() {
+        return true;
+    }
+
+    @Override
+    public void transferItems(Level level, Container from) {
+        var to = Utils.getAdjacentChest(level, worldPosition);
+        if (to != null) {
+            Utils.transferItems(getFilters(), from, to);
+        }
     }
 }

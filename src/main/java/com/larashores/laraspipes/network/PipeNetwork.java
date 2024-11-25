@@ -14,6 +14,7 @@ public class PipeNetwork {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public HashSet<PipeNetworkEntity> entities = new HashSet<>();
+    public HashSet<PipeNetworkEntity> itemAcceptors = new HashSet<>();
 
     public boolean contains(PipeNetworkEntity entity) {
         return entities.contains(entity);
@@ -21,11 +22,15 @@ public class PipeNetwork {
 
     public void add(PipeNetworkEntity entity) {
         entities.add(entity);
+        if (entity.acceptsItems()) {
+            itemAcceptors.add(entity);
+        }
         entity.setNetwork(this);
     }
 
     public void merge(PipeNetwork network, HashSet<BlockPos> seen) {
         entities.addAll(network.entities);
+        itemAcceptors.addAll(network.itemAcceptors);
         for (var entity: network.entities) {
             entity.setNetwork(this);
             seen.add(entity.getBlockPos());
@@ -37,6 +42,7 @@ public class PipeNetwork {
             entity.clearNetwork();
         }
         entities.clear();
+        itemAcceptors.clear();
     }
 
     public static void discover(Level level, BlockPos start) {

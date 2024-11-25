@@ -21,17 +21,13 @@ public class ItemExtractorEntity extends PipeNetworkEntity {
 
     public void handleTick(Level level, BlockPos pos) {
         if (level.getGameTime() % 20 == 0) {
-            var extractChest = Utils.getAdjacentChest(level, pos);
-            if (extractChest != null && !extractChest.isEmpty()) {
+            var chest = Utils.getAdjacentChest(level, pos);
+            if (chest != null && !chest.isEmpty()) {
                 var network = getOrCreateNetwork(level, pos);
-                for (var entity : network.entities) {
-                    if (entity instanceof ItemDepositorEntity itemDepositorEntity) {
-                        var depositPos = entity.getBlockPos();
-                        var depositChest = Utils.getAdjacentChest(level, depositPos);
-                        if (depositChest != null) {
-                            Utils.transferItems(itemDepositorEntity.getFilters(), extractChest, depositChest);
-                        }
-                    }
+                LOGGER.info("Network: {}", network);
+                for (var entity : network.itemAcceptors) {
+                    LOGGER.info("    Entity: {}", entity);
+                    entity.transferItems(level, chest);
                 }
             }
         }
