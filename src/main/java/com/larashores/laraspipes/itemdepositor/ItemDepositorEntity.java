@@ -65,4 +65,18 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
             Utils.transferItems(getFilters(), from, to);
         }
     }
+
+    public int compare(PipeNetworkEntity other, BlockPos pos) {
+        // Consider item depositors with filters before those without them.
+        if (other instanceof ItemDepositorEntity entity) {
+            var thisHasFilters = !getFilters().isEmpty();
+            var otherHasFilters = !entity.getFilters().isEmpty();
+            if (thisHasFilters && !otherHasFilters) {
+                return -1;
+            } else if (!thisHasFilters && otherHasFilters) {
+                return 1;
+            }
+        }
+        return super.compare(other, pos);
+    }
 }

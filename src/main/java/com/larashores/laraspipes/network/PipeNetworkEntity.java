@@ -65,4 +65,9 @@ public abstract class PipeNetworkEntity extends BlockEntity {
     public void transferItems(Level level, Container from) {
 
     }
+
+    public int compare(PipeNetworkEntity other, BlockPos pos) {
+        // Consider closer entities before farther entities
+        return (int) (pos.distSqr(worldPosition) - pos.distSqr(other.worldPosition));
+    }
 }

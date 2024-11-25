@@ -47,7 +47,7 @@ public class Utils {
     public static void transferItems(Set<Item> filters, Container from, Container to) {
         for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
             var fromStack = from.getItem(i);
-            if (filters.contains(fromStack.getItem())) {
+            if (filters.isEmpty() || filters.contains(fromStack.getItem())) {
                 for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
                     var toStack = to.getItem(j);
                     if (toStack.isEmpty()) {

@@ -13,8 +13,8 @@ public class PipeNetwork {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public HashSet<PipeNetworkEntity> entities = new HashSet<>();
-    public HashSet<PipeNetworkEntity> itemAcceptors = new HashSet<>();
+    private final HashSet<PipeNetworkEntity> entities = new HashSet<>();
+    private final HashSet<PipeNetworkEntity> itemAcceptors = new HashSet<>();
 
     public boolean contains(PipeNetworkEntity entity) {
         return entities.contains(entity);
@@ -68,5 +68,11 @@ public class PipeNetwork {
                 queue.addAll(Utils.getAdjacentBlockPositions(pos));
             }
         }
+    }
+
+    public ArrayList<PipeNetworkEntity> getItemAcceptors(BlockPos pos) {
+        var acceptors = new ArrayList<>(itemAcceptors);
+        acceptors.sort((e1, e2) -> e1.compare(e2, pos));
+        return acceptors;
     }
 }

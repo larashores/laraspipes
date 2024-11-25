@@ -23,7 +23,7 @@ public class ItemExtractorEntity extends PipeNetworkEntity {
             var chest = Utils.getFacingChest(level, pos);
             if (chest != null && !chest.isEmpty()) {
                 var network = getOrCreateNetwork(level, pos);
-                for (var entity : network.itemAcceptors) {
+                for (var entity : network.getItemAcceptors(pos)) {
                     entity.transferItems(level, chest);
                 }
             }
