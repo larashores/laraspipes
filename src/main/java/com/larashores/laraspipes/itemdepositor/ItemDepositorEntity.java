@@ -60,7 +60,7 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
 
     @Override
     public void transferItems(Level level, Container from) {
-        var to = Utils.getAdjacentChest(level, worldPosition);
+        var to = Utils.getFacingChest(level, worldPosition);
         if (to != null) {
             Utils.transferItems(getFilters(), from, to);
         }

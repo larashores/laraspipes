@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.slf4j.Logger;
 
 import java.util.Arrays;
@@ -23,30 +24,21 @@ public class Utils {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static Container getAdjacentChest(Level level, BlockPos pos) {
-        // Define the positions of the six adjacent blocks
-        BlockPos[] adjacentPositions = new BlockPos[]{
-            pos.north(),
-            pos.south(),
-            pos.east(),
-            pos.west(),
-            pos.above(),
-            pos.below()
-        };
+    public static Container getFacingChest(Level level, BlockPos pos) {
+        var state = level.getBlockState(pos);
+        var facing = state.getOptionalValue(BlockStateProperties.FACING);
+        if (facing.isPresent()) {
+            var facingPos = pos.relative(facing.get());
+            var facingEntity = level.getBlockEntity(facingPos);
+            var facingState = level.getBlockState(facingPos);
+            var facingBlock = facingState.getBlock();
 
-        // Check each adjacent block
-        for (BlockPos adjacentPos : adjacentPositions) {
-            var blockEntity = level.getBlockEntity(adjacentPos);
-            var blockState = level.getBlockState(adjacentPos);
-            var block = blockState.getBlock();
-
-            // Check if the adjacent block is a chest
             if (
-                blockState.is(Blocks.CHEST)
-                && blockEntity instanceof ChestBlockEntity
-                && block instanceof ChestBlock chestBlock
+                facingState.is(Blocks.CHEST)
+                && facingEntity instanceof ChestBlockEntity
+                && facingBlock instanceof ChestBlock chestBlock
             ) {
-                return ChestBlock.getContainer(chestBlock, blockState, level, adjacentPos, false);
+                return ChestBlock.getContainer(chestBlock, facingState, level, facingPos, false);
             }
         }
         return null;

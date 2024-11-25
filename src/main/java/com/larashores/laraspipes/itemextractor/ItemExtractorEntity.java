@@ -1,7 +1,6 @@
 package com.larashores.laraspipes.itemextractor;
 
 import com.larashores.laraspipes.Registration;
-import com.larashores.laraspipes.itemdepositor.ItemDepositorEntity;
 import com.larashores.laraspipes.network.PipeNetworkEntity;
 import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
@@ -21,12 +20,10 @@ public class ItemExtractorEntity extends PipeNetworkEntity {
 
     public void handleTick(Level level, BlockPos pos) {
         if (level.getGameTime() % 20 == 0) {
-            var chest = Utils.getAdjacentChest(level, pos);
+            var chest = Utils.getFacingChest(level, pos);
             if (chest != null && !chest.isEmpty()) {
                 var network = getOrCreateNetwork(level, pos);
-                LOGGER.info("Network: {}", network);
                 for (var entity : network.itemAcceptors) {
-                    LOGGER.info("    Entity: {}", entity);
                     entity.transferItems(level, chest);
                 }
             }
