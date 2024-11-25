@@ -26,5 +26,9 @@ public class DataGeneration {
             event.includeClient(),
             new LanguagesProvider(packOutput, "en_us")
         );
+        generator.addProvider(
+            event.includeClient(),
+            new RecipesProvider(packOutput)
+        );
     }
 }
