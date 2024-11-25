@@ -54,7 +54,7 @@ public class Main
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Registration.PIPE_ITEM);
             event.accept(Registration.DEPOSITOR_ITEM);
             event.accept(Registration.EXTRACTOR_ITEM);

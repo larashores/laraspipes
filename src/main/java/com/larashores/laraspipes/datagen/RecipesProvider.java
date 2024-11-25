@@ -19,7 +19,7 @@ public class RecipesProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.EXTRACTOR_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Registration.EXTRACTOR_ITEM.get())
             .pattern("i i")
             .pattern("iri")
             .pattern(" h ")
@@ -29,7 +29,7 @@ public class RecipesProvider extends RecipeProvider {
             .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.DEPOSITOR_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Registration.DEPOSITOR_ITEM.get())
             .pattern(" h ")
             .pattern("iri")
             .pattern("i i")
@@ -39,7 +39,7 @@ public class RecipesProvider extends RecipeProvider {
             .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.PIPE_ITEM.get(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Registration.PIPE_ITEM.get(), 4)
             .pattern("iri")
             .define('i', Items.IRON_INGOT)
             .define('r', Items.REDSTONE)

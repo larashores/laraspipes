@@ -41,6 +41,7 @@ public class ItemPipeBlock extends Block implements EntityBlock {
         super(
             BlockBehaviour.Properties.of()
             .noOcclusion()
+            .strength(0.5F)
             .mapColor(MapColor.STONE)
         );
         LOGGER.info("ItemPipe()");

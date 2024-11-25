@@ -41,7 +41,7 @@ public class ItemExtractorBlock extends Block implements EntityBlock {
         super(
             BlockBehaviour.Properties.of()
             .noOcclusion()
-            .strength(3.5F)
+            .strength(1.5F)
             .sound(SoundType.METAL)
         );
         LOGGER.info("ItemExtractor()");

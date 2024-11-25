@@ -2,8 +2,13 @@ package com.larashores.laraspipes.datagen;
 
 import com.larashores.laraspipes.Main;
 import com.mojang.logging.LogUtils;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
 
 
 public class DataGeneration {
@@ -29,6 +34,14 @@ public class DataGeneration {
         generator.addProvider(
             event.includeClient(),
             new RecipesProvider(packOutput)
+        );
+        generator.addProvider(
+            event.includeServer(),
+            new LootTableProvider(
+                packOutput,
+                Collections.emptySet(),
+                List.of(new LootTableProvider.SubProviderEntry(LootTables::new, LootContextParamSets.BLOCK))
+            )
         );
     }
 }
