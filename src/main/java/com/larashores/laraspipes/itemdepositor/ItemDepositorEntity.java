@@ -18,13 +18,14 @@ import java.util.Set;
 
 
 public class ItemDepositorEntity extends PipeNetworkEntity {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final String TAG_FILTERS = "filters";
     public final ItemStackHandler filters = new ItemDepositorHandler(this, 6 * 9);
 
     public ItemDepositorEntity(BlockPos pos, BlockState state) {
         super(Registration.DEPOSITOR_ENTITY.get(), pos, state);
-        LOGGER.info("ItemDepositorEntity({}, {})", pos, state);
     }
 
     @Override
@@ -33,7 +34,6 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
         if (tag.contains(TAG_FILTERS)) {
             filters.deserializeNBT(tag.getCompound(TAG_FILTERS));
         }
-
     }
 
     @Override

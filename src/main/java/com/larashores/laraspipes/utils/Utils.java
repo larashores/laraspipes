@@ -63,7 +63,6 @@ public class Utils {
 
     // Returns amount of rotation needed to turn a block to face a direction, assuming North is no rotation.
     public static ScreenRotation getRotation(Direction direction) {
-        LOGGER.info("Direction: {} ({}, {})", direction, direction.getRotation().x(), direction.getRotation().y());
         return new ScreenRotation(
             direction == Direction.UP ? 90 : direction == Direction.DOWN ? -90 : 0,
             direction.getAxis().isVertical() ? 0 : (int) direction.toYRot() % 360

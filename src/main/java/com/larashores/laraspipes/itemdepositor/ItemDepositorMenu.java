@@ -18,7 +18,9 @@ import javax.annotation.Nonnull;
 
 
 public class ItemDepositorMenu extends AbstractContainerMenu {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final ScreenSize SLOT_SIZE = new ScreenSize(18, 18);
     private static final ScreenGrid FILTER_GRID = new ScreenGrid(6, 9);
     private static final ScreenPos FILTER_POS = new ScreenPos(8, 17);
@@ -30,7 +32,6 @@ public class ItemDepositorMenu extends AbstractContainerMenu {
 
     public ItemDepositorMenu(int windowId, Player player, BlockPos pos) {
         super(Registration.DEPOSITOR_MENU.get(), windowId);
-        LOGGER.info("ItemDepositorMenu({}, {}, {})", windowId, player, pos);
         this.pos = pos;
         addSlotsFilters(player);
         addSlotsInventory(player);
@@ -40,7 +41,6 @@ public class ItemDepositorMenu extends AbstractContainerMenu {
     @Nonnull
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        LOGGER.info("quickMoveStack({}, {})", player, index);
         var slot = getSlot(index);
         if (index < FILTER_GRID.rows() * FILTER_GRID.cols()) {
             var stack = slot.getItem();

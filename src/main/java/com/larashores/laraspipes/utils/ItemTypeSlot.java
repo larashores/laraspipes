@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import java.util.Optional;
 
 public class ItemTypeSlot extends SlotItemHandler {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemTypeSlot(IItemHandler handler, int index, int xPosition, int yPosition) {
@@ -20,7 +21,6 @@ public class ItemTypeSlot extends SlotItemHandler {
     @Override
     @NotNull
     public ItemStack safeInsert(ItemStack stack, int count) {
-        LOGGER.info("safeInsert({}, {})", stack, count);
         setByPlayer(stack.copyWithCount(1));
         return stack;
     }
@@ -28,7 +28,6 @@ public class ItemTypeSlot extends SlotItemHandler {
     @Override
     @NotNull
     public Optional<ItemStack> tryRemove(int amount, int min, Player player) {
-        LOGGER.info("tryRemove({}, {}, {})", amount, min, player);
         setByPlayer(ItemStack.EMPTY);
         return Optional.empty();
     }

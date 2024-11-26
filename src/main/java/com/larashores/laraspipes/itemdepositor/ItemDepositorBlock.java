@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 
 
 public class ItemDepositorBlock extends PipeNetworkDirectedBlock implements EntityBlock {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemDepositorBlock() {
@@ -30,13 +31,11 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock implements Enti
             .strength(1.5F)
             .sound(SoundType.METAL)
         );
-        LOGGER.info("ItemDepositorBlock()");
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        LOGGER.info("newBlockEntity({}, {})", pos, state);
         return new ItemDepositorEntity(pos, state);
     }
 
@@ -51,7 +50,6 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock implements Enti
         InteractionHand hand,
         BlockHitResult trace
     ) {
-        LOGGER.info("use({}, {}, {}, {}, {}, {})", state, level, pos, player, hand, trace);
         if (!level.isClientSide) {
             BlockEntity entity = level.getBlockEntity(pos);
             if (entity != null) {

@@ -1,6 +1,5 @@
 package com.larashores.laraspipes.datagen;
 
-import com.larashores.laraspipes.Main;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -12,10 +11,10 @@ import java.util.List;
 
 
 public class DataGeneration {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void generate(GatherDataEvent event) {
-        LOGGER.info("Generating data for {}", Main.MOD_ID);
         var generator = event.getGenerator();
         var packOutput = generator.getPackOutput();
 

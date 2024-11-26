@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 
 
 public class ItemExtractorBlock extends PipeNetworkDirectedBlock implements EntityBlock {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemExtractorBlock() {
@@ -25,13 +26,11 @@ public class ItemExtractorBlock extends PipeNetworkDirectedBlock implements Enti
             .strength(1.5F)
             .sound(SoundType.METAL)
         );
-        LOGGER.info("ItemExtractor()");
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        LOGGER.info("newBlockEntity({}, {})", pos, state);
         return new ItemExtractorEntity(pos, state);
     }
 
@@ -42,7 +41,6 @@ public class ItemExtractorBlock extends PipeNetworkDirectedBlock implements Enti
         BlockState state,
         BlockEntityType<T> type
     ) {
-        LOGGER.info("getTicker({}, {}, {})", level, state, type);
         if (level.isClientSide) {
             return null;
         } else {

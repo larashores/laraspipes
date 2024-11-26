@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import org.slf4j.Logger;
 
 public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMenu> {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
     private final ResourceLocation GUI = new ResourceLocation(Main.MOD_ID, "textures/gui/item_depositor.png");
 
@@ -18,7 +19,6 @@ public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMe
         this.imageWidth = 177;
         this.imageHeight = 220;
         this.inventoryLabelY = 127;
-        LOGGER.info("ItemDepositorScreen({}, {}, {})", menu, inventory, component);
     }
 
     @Override

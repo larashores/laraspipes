@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 
 
 public class ItemPipeBlock extends PipeNetworkBlock implements EntityBlock {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemPipeBlock() {
@@ -22,13 +23,11 @@ public class ItemPipeBlock extends PipeNetworkBlock implements EntityBlock {
             .strength(0.5F)
             .mapColor(MapColor.STONE)
         );
-        LOGGER.info("ItemPipe()");
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        LOGGER.info("newBlockEntity({}, {})", pos, state);
         return new ItemPipeEntity(pos, state);
     }
 }

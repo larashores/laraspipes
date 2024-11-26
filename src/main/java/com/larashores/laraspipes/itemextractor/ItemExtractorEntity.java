@@ -11,11 +11,11 @@ import org.slf4j.Logger;
 
 
 public class ItemExtractorEntity extends PipeNetworkEntity {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ItemExtractorEntity(BlockPos pos, BlockState state) {
         super(Registration.EXTRACTOR_ENTITY.get(), pos, state);
-        LOGGER.info("ItemExtractorEntity({}, {})", pos, state);
     }
 
     public void handleTick(Level level, BlockPos pos) {
