@@ -1,8 +1,7 @@
 package com.larashores.laraspipes.utils;
 
-import com.larashores.laraspipes.itemdepositor.ItemDepositorBlock;
-import com.larashores.laraspipes.itemextractor.ItemExtractorBlock;
 import com.larashores.laraspipes.itempipe.ItemPipeBlock;
+import com.larashores.laraspipes.network.PipeNetworkBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -77,14 +76,12 @@ public class Utils {
         for (Direction direction : Direction.values()) {
             var neighborPos = pos.relative(direction);
             var neighborState = level.getBlockState(neighborPos);
-            if (neighborState.getBlock() instanceof ItemPipeBlock) {
-                neighborState = ItemPipeBlock.setConnectionStates(level, neighborPos, neighborState);
-            } else if (neighborState.getBlock() instanceof ItemExtractorBlock) {
-                neighborState = ItemExtractorBlock.setConnectionStates(level, neighborPos, neighborState);
-            } else if (neighborState.getBlock() instanceof ItemDepositorBlock) {
-                neighborState = ItemDepositorBlock.setConnectionStates(level, neighborPos, neighborState);
+            if (neighborState.getBlock() instanceof PipeNetworkBlock block) {
+                var newState = block.setConnectionStates(level, neighborPos, neighborState);
+                if (newState != neighborState) {
+                    level.setBlock(neighborPos, newState, Block.UPDATE_ALL);
+                }
             }
-            level.setBlock(neighborPos, neighborState, Block.UPDATE_ALL);
         }
     }
 

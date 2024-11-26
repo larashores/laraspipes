@@ -1,5 +1,6 @@
 package com.larashores.laraspipes.itemdepositor;
 
+import com.larashores.laraspipes.network.PipeNetworkBlock;
 import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 import static com.larashores.laraspipes.Registration.*;
 
-public class ItemDepositorBlock extends Block implements EntityBlock {
+public class ItemDepositorBlock extends PipeNetworkBlock implements EntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Map<Direction, BooleanProperty> CONNECTED = Map.of(
@@ -80,10 +81,8 @@ public class ItemDepositorBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.FACING);
-        for (var property : CONNECTED.values()) {
-            builder.add(property);
-        }
     }
 
     @Nullable
@@ -115,39 +114,5 @@ public class ItemDepositorBlock extends Block implements EntityBlock {
         state = state.setValue(BlockStateProperties.FACING, facing);
         state = setConnectionStates(context.getLevel(), context.getClickedPos(), state);
         return state;
-    }
-
-    public static BlockState setConnectionStates(Level level, BlockPos pos, BlockState state) {
-        for (var direction: Direction.values()) {
-            var property = CONNECTED.get(direction);
-            var adjacentPos = pos.relative(direction);
-            var adjacentState = level.getBlockState(adjacentPos);
-            var connected = (
-                adjacentState.is(PIPE.get())
-                || (
-                    adjacentState.is(DEPOSITOR.get())
-                        && direction.getOpposite() != adjacentState.getValue(BlockStateProperties.FACING)
-                ) || (
-                    adjacentState.is(EXTRACTOR.get())
-                        && direction.getOpposite() != adjacentState.getValue(BlockStateProperties.FACING)
-                )
-            );
-            state = state.setValue(property, connected);
-        }
-        return state;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean isMoving) {
-        super.onPlace(state, level, pos, old, isMoving);
-        Utils.setAdjacentBlockStates(level, pos);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState old, boolean isMoving) {
-        super.onRemove(state, level, pos, old, isMoving);
-        Utils.setAdjacentBlockStates(level, pos);
     }
 }
