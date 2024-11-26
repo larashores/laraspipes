@@ -15,7 +15,7 @@ public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMe
 
     public ItemDepositorScreen(ItemDepositorMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
-        this.imageWidth = 188;
+        this.imageWidth = 177;
         this.imageHeight = 220;
         this.inventoryLabelY = 127;
         LOGGER.info("ItemDepositorScreen({}, {}, {})", menu, inventory, component);
