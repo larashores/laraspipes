@@ -50,6 +50,7 @@ public class PipeNetworkDirectedBlock extends PipeNetworkBlock {
         var state = super.getStateForPlacement(context);
         if (state != null) {
             state = state.setValue(BlockStateProperties.FACING, facing);
+            state = state.setValue(CONNECTED.get(facing), false);
         }
         return state;
     }

@@ -9,6 +9,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class PipeNetworkEntity extends BlockEntity {
     @SuppressWarnings("unused")
@@ -46,7 +49,9 @@ public abstract class PipeNetworkEntity extends BlockEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        PipeNetwork.discover(level, worldPosition);
+        if (level != null) {
+            PipeNetwork.discover(level, worldPosition);
+        }
     }
 
     @Override
@@ -69,5 +74,21 @@ public abstract class PipeNetworkEntity extends BlockEntity {
     public int compare(PipeNetworkEntity other, BlockPos pos) {
         // Consider closer entities before farther entities
         return (int) (pos.distSqr(worldPosition) - pos.distSqr(other.worldPosition));
+    }
+
+    public List<BlockPos> getNeighbors() {
+        var neighbors = new ArrayList<BlockPos>();
+        if (level != null) {
+            var state = level.getBlockState(worldPosition);
+            for (var entry: PipeNetworkBlock.CONNECTED.entrySet()) {
+                var direction = entry.getKey();
+                var property = entry.getValue();
+                var connected = state.getOptionalValue(property);
+                if (connected.isPresent() && connected.get()) {
+                    neighbors.add(worldPosition.relative(direction));
+                }
+            }
+        }
+        return neighbors;
     }
 }

@@ -1,6 +1,5 @@
 package com.larashores.laraspipes.utils;
 
-import com.larashores.laraspipes.itempipe.ItemPipeBlock;
 import com.larashores.laraspipes.network.PipeNetworkBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -83,10 +81,6 @@ public class Utils {
                 }
             }
         }
-    }
-
-    public static List<BlockPos> getAdjacentBlockPositions(BlockPos pos) {
-        return Arrays.asList(pos.north(), pos.south(), pos.east(), pos.west(), pos.above(), pos.below());
     }
 
     public static List<Direction> getDirections(Direction direction) {

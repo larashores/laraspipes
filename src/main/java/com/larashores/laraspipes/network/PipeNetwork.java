@@ -1,6 +1,5 @@
 package com.larashores.laraspipes.network;
 
-import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -60,12 +59,12 @@ public class PipeNetwork {
             var entity = level.getBlockEntity(pos);
             if (entity instanceof PipeNetworkEntity networkEntity) {
                 var otherNetwork = networkEntity.getNetwork();
-                if (otherNetwork != null) {
+                if (otherNetwork != null && otherNetwork != network) {
                     otherNetwork.merge(network, seen);
                     network = otherNetwork;
                 }
                 network.add(networkEntity);
-                queue.addAll(Utils.getAdjacentBlockPositions(pos));
+                queue.addAll(networkEntity.getNeighbors());
             }
         }
     }

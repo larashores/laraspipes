@@ -31,6 +31,7 @@ public class PipeNetworkBlock extends Block {
     }
 
     public BlockState setConnectionStates(Level level, BlockPos pos, BlockState state) {
+        var facing = state.getOptionalValue(BlockStateProperties.FACING);
         for (var direction: Direction.values()) {
             var property = CONNECTED.get(direction);
             var adjacentPos = pos.relative(direction);
@@ -38,7 +39,8 @@ public class PipeNetworkBlock extends Block {
             var adjacentEntity = level.getBlockEntity(adjacentPos);
             var adjacentFacing = adjacentState.getOptionalValue(BlockStateProperties.FACING);
             var connected = (
-                (adjacentFacing.isEmpty() || direction.getOpposite() != adjacentFacing.get())
+                (facing.isEmpty() || direction != facing.get())
+                && (adjacentFacing.isEmpty() || direction.getOpposite() != adjacentFacing.get())
                 && adjacentEntity instanceof PipeNetworkEntity
             );
             state = state.setValue(property, connected);
