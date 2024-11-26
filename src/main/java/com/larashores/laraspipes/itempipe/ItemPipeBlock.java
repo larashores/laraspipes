@@ -3,7 +3,6 @@ package com.larashores.laraspipes.itempipe;
 import com.larashores.laraspipes.network.PipeNetworkBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -31,13 +30,5 @@ public class ItemPipeBlock extends PipeNetworkBlock implements EntityBlock {
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         LOGGER.info("newBlockEntity({}, {})", pos, state);
         return new ItemPipeEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        var state = defaultBlockState();
-        state = setConnectionStates(context.getLevel(), context.getClickedPos(), state);
-        return state;
     }
 }
