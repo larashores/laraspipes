@@ -23,7 +23,7 @@ public class ItemDepositorMenuProvider implements MenuProvider {
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return Component.translatable("Item Depositor");
+        return Component.translatable("block.laraspipes.item_depositor");
     }
 
     @Override
