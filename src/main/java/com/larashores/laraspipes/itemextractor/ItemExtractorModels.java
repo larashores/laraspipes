@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
 
 
 public class ItemExtractorModels extends DataGenerationProvider {
@@ -82,5 +83,12 @@ public class ItemExtractorModels extends DataGenerationProvider {
                 .addModel()
                 .condition(ItemExtractorBlock.CONNECTED.get(direction), true);
         }
+    }
+
+    public void register(ItemModelProvider provider) {
+        provider.withExistingParent(
+            Registration.EXTRACTOR.getId().getPath(),
+            provider.modLoc("block/item_extractor_front")
+        );
     }
 }

@@ -33,7 +33,7 @@ public class DataGeneration {
         );
         generator.addProvider(
             event.includeClient(),
-            new ItemModelsProvider(packOutput, event.getExistingFileHelper())
+            new ItemModelsProvider(providers, packOutput, event.getExistingFileHelper())
         );
         generator.addProvider(
             event.includeClient(),

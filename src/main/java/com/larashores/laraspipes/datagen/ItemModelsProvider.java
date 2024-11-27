@@ -1,23 +1,26 @@
 package com.larashores.laraspipes.datagen;
 
 import com.larashores.laraspipes.Main;
-import com.larashores.laraspipes.Registration;
-import com.mojang.logging.LogUtils;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import org.slf4j.Logger;
 
 public class ItemModelsProvider extends ItemModelProvider {
+    private final DataGenerationProvider[] providers;
 
-    public ItemModelsProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+    public ItemModelsProvider(
+        DataGenerationProvider[] providers,
+        PackOutput output,
+        ExistingFileHelper existingFileHelper
+    ) {
         super(output, Main.MOD_ID, existingFileHelper);
+        this.providers = providers;
     }
 
     @Override
     protected void registerModels() {
-        withExistingParent(Registration.DEPOSITOR.getId().getPath(), modLoc("block/item_depositor_front"));
-        withExistingParent(Registration.EXTRACTOR.getId().getPath(), modLoc("block/item_extractor_front"));
-        withExistingParent(Registration.PIPE.getId().getPath(), modLoc("block/item_pipe_center"));
+        for (var provider: providers) {
+            provider.register(this);
+        }
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
 
 
 public class ItemDepositorModels extends DataGenerationProvider {
@@ -82,5 +83,12 @@ public class ItemDepositorModels extends DataGenerationProvider {
                 .addModel()
                 .condition(ItemDepositorBlock.CONNECTED.get(direction), true);
         }
+    }
+
+    public void register(ItemModelProvider provider) {
+        provider.withExistingParent(
+            Registration.DEPOSITOR.getId().getPath(),
+            provider.modLoc("block/item_depositor_front")
+        );
     }
 }

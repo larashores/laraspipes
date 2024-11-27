@@ -7,6 +7,7 @@ import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
 
 public class ItemPipeModels extends DataGenerationProvider {
     public void register(BlockStateProvider provider) {
@@ -44,5 +45,12 @@ public class ItemPipeModels extends DataGenerationProvider {
                 .addModel()
                 .condition(ItemPipeBlock.CONNECTED.get(direction), true);
         }
+    }
+
+    public void register(ItemModelProvider provider) {
+        provider.withExistingParent(
+            Registration.PIPE.getId().getPath(),
+            provider.modLoc("block/item_pipe_center")
+        );
     }
 }
