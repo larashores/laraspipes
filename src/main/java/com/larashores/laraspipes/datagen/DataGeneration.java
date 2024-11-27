@@ -41,7 +41,7 @@ public class DataGeneration {
         );
         generator.addProvider(
             event.includeClient(),
-            new RecipesProvider(packOutput)
+            new RecipesProvider(providers, packOutput)
         );
         generator.addProvider(
             event.includeServer(),
