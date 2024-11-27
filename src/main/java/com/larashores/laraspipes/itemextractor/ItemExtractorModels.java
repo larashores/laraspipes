@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.LanguageProvider;
 
 
 public class ItemExtractorModels extends DataGenerationProvider {
@@ -90,5 +91,11 @@ public class ItemExtractorModels extends DataGenerationProvider {
             Registration.EXTRACTOR.getId().getPath(),
             provider.modLoc("block/item_extractor_front")
         );
+    }
+
+    public void register(LanguageProvider provider, String locale) {
+        if (locale.equals("en_us")) {
+            provider.add(Registration.EXTRACTOR.get(), "Item Extractor");
+        }
     }
 }

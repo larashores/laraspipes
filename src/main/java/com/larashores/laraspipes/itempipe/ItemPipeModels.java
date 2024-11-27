@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.LanguageProvider;
 
 public class ItemPipeModels extends DataGenerationProvider {
     public void register(BlockStateProvider provider) {
@@ -52,5 +53,11 @@ public class ItemPipeModels extends DataGenerationProvider {
             Registration.PIPE.getId().getPath(),
             provider.modLoc("block/item_pipe_center")
         );
+    }
+
+    public void register(LanguageProvider provider, String locale) {
+        if (locale.equals("en_us")) {
+            provider.add(Registration.PIPE.get(), "Item Pipe");
+        }
     }
 }

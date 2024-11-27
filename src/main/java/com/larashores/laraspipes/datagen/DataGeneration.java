@@ -37,7 +37,7 @@ public class DataGeneration {
         );
         generator.addProvider(
             event.includeClient(),
-            new LanguagesProvider(packOutput, "en_us")
+            new LanguagesProvider(providers, packOutput, "en_us")
         );
         generator.addProvider(
             event.includeClient(),
