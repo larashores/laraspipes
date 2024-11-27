@@ -2,20 +2,18 @@ package com.larashores.laraspipes.itemdepositor;
 
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.Registration;
+import com.larashores.laraspipes.datagen.DataGenerationProvider;
 import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
 
 
-public class ItemDepositorModels {
-    public static void register(
-        BlockModelProvider models,
-        MultiPartBlockStateBuilder blockStateBuilder
-    ) {
+public class ItemDepositorModels extends DataGenerationProvider {
+    public void register(BlockStateProvider provider) {
         var path = Registration.DEPOSITOR.getId().getPath();
+        var models = provider.models();
         var frontModeBuilder = models.getBuilder("block/" + path + "_front");
         frontModeBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
         frontModeBuilder.texture("back", Main.MOD_ID + ":block/" + path + "_back");
@@ -65,6 +63,7 @@ public class ItemDepositorModels {
             .allFaces((direction, faceBuilder) -> faceBuilder.texture("#pipe"))
             .end();
 
+        var blockStateBuilder = provider.getMultipartBuilder(Registration.DEPOSITOR.get());
         for (var direction : Direction.values()) {
             var rotation = Utils.getRotation(direction);
             blockStateBuilder

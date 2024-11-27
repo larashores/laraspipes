@@ -2,18 +2,16 @@ package com.larashores.laraspipes.itempipe;
 
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.Registration;
+import com.larashores.laraspipes.datagen.DataGenerationProvider;
 import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
 
-public class ItemPipeModels{
-    public static void register(
-        BlockModelProvider models,
-        MultiPartBlockStateBuilder blockStateBuilder
-    ) {
+public class ItemPipeModels extends DataGenerationProvider {
+    public void register(BlockStateProvider provider) {
         var path = Registration.PIPE.getId().getPath();
+        var models = provider.models();
         var centerBuilder = models.getBuilder("block/" + path + "_center");
         centerBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
         centerBuilder.texture("all", Main.MOD_ID + ":block/" + path);
@@ -31,6 +29,7 @@ public class ItemPipeModels{
             .allFaces((direction, faceBuilder) -> faceBuilder.texture("#all"))
             .end();
 
+        var blockStateBuilder = provider.getMultipartBuilder(Registration.PIPE.get());
         blockStateBuilder
             .part()
             .modelFile(centerBuilder)

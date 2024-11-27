@@ -1,32 +1,26 @@
 package com.larashores.laraspipes.datagen;
 
 import com.larashores.laraspipes.Main;
-import com.larashores.laraspipes.Registration;
-import com.larashores.laraspipes.itemdepositor.ItemDepositorModels;
-import com.larashores.laraspipes.itemextractor.ItemExtractorModels;
-import com.larashores.laraspipes.itempipe.ItemPipeModels;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockStatesProvider extends BlockStateProvider {
-    public BlockStatesProvider(PackOutput output, ExistingFileHelper helper) {
+    private final DataGenerationProvider[] providers;
+
+    public BlockStatesProvider(
+        DataGenerationProvider[] providers,
+        PackOutput output,
+        ExistingFileHelper helper
+    ) {
         super(output, Main.MOD_ID, helper);
+        this.providers = providers;
     }
 
     @Override
     protected void registerStatesAndModels() {
-        ItemExtractorModels.register(
-            models(),
-            getMultipartBuilder(Registration.EXTRACTOR.get())
-        );
-        ItemDepositorModels.register(
-            models(),
-            getMultipartBuilder(Registration.DEPOSITOR.get())
-        );
-        ItemPipeModels.register(
-            models(),
-            getMultipartBuilder(Registration.PIPE.get())
-        );
+        for (var provider: providers) {
+            provider.register(this);
+        }
     }
 }

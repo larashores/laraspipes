@@ -1,5 +1,8 @@
 package com.larashores.laraspipes.datagen;
 
+import com.larashores.laraspipes.itemdepositor.ItemDepositorModels;
+import com.larashores.laraspipes.itemextractor.ItemExtractorModels;
+import com.larashores.laraspipes.itempipe.ItemPipeModels;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -18,9 +21,15 @@ public class DataGeneration {
         var generator = event.getGenerator();
         var packOutput = generator.getPackOutput();
 
+        var providers = new DataGenerationProvider[]{
+            new ItemDepositorModels(),
+            new ItemExtractorModels(),
+            new ItemPipeModels(),
+        };
+
         generator.addProvider(
             event.includeClient(),
-            new BlockStatesProvider(packOutput, event.getExistingFileHelper())
+            new BlockStatesProvider(providers, packOutput, event.getExistingFileHelper())
         );
         generator.addProvider(
             event.includeClient(),
