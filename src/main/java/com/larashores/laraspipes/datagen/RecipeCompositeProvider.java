@@ -6,11 +6,11 @@ import net.minecraft.data.recipes.RecipeProvider;
 
 import java.util.function.Consumer;
 
-public class RecipesProvider extends RecipeProvider {
-    private final DataGenerationProvider[] providers;
+public class RecipeCompositeProvider extends RecipeProvider {
+    private final Iterable<DataProvider> providers;
 
-    public RecipesProvider(
-        DataGenerationProvider[] providers,
+    public RecipeCompositeProvider(
+        Iterable<DataProvider> providers,
         PackOutput packOutput
     ) {
         super(packOutput);

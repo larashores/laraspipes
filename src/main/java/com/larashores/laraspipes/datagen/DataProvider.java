@@ -9,11 +9,11 @@ import net.minecraftforge.common.data.LanguageProvider;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DataGenerationProvider {
+public class DataProvider {
     public void register(BlockStateProvider provider) { }
     public void register(ItemModelProvider provider) { }
     public void register(LanguageProvider provider, String locale) { }
     public void register(Consumer<FinishedRecipe> consumer) { }
-    public void register(LootTablesProvider provider) { }
+    public void register(LootTableCompositeProvider provider) { }
     public Iterable<Block> getKnownBlocks() { return List.of(); }
 }

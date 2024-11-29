@@ -5,11 +5,11 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class BlockStatesProvider extends BlockStateProvider {
-    private final DataGenerationProvider[] providers;
+public class BlockStateCompositeProvider extends BlockStateProvider {
+    private final Iterable<DataProvider> providers;
 
-    public BlockStatesProvider(
-        DataGenerationProvider[] providers,
+    public BlockStateCompositeProvider(
+        Iterable<DataProvider> providers,
         PackOutput output,
         ExistingFileHelper helper
     ) {

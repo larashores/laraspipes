@@ -2,8 +2,8 @@ package com.larashores.laraspipes.itempipe;
 
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.Registration;
-import com.larashores.laraspipes.datagen.DataGenerationProvider;
-import com.larashores.laraspipes.datagen.LootTablesProvider;
+import com.larashores.laraspipes.datagen.DataProvider;
+import com.larashores.laraspipes.datagen.LootTableCompositeProvider;
 import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Direction;
@@ -20,7 +20,7 @@ import net.minecraftforge.common.data.LanguageProvider;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ItemPipeModels extends DataGenerationProvider {
+public class ItemPipeData extends DataProvider {
     public void register(BlockStateProvider provider) {
         var path = Registration.PIPE.getId().getPath();
         var models = provider.models();
@@ -80,7 +80,7 @@ public class ItemPipeModels extends DataGenerationProvider {
             .save(consumer);
     }
 
-    public void register(LootTablesProvider provider) {
+    public void register(LootTableCompositeProvider provider) {
         provider.dropSelf(Registration.PIPE.get());
     }
 

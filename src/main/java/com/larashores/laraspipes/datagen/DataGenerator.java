@@ -1,8 +1,4 @@
 package com.larashores.laraspipes.datagen;
-
-import com.larashores.laraspipes.itemdepositor.ItemDepositorModels;
-import com.larashores.laraspipes.itemextractor.ItemExtractorModels;
-import com.larashores.laraspipes.itempipe.ItemPipeModels;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -13,34 +9,35 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class DataGeneration {
+public class DataGenerator {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static void generate(GatherDataEvent event) {
+    private final Iterable<DataProvider> providers;
+
+    public DataGenerator(Iterable<DataProvider> providers) {
+        this.providers = providers;
+    }
+
+    public void generate(GatherDataEvent event) {
         var generator = event.getGenerator();
         var packOutput = generator.getPackOutput();
 
-        var providers = new DataGenerationProvider[]{
-            new ItemDepositorModels(),
-            new ItemExtractorModels(),
-            new ItemPipeModels(),
-        };
         generator.addProvider(
             event.includeClient(),
-            new BlockStatesProvider(providers, packOutput, event.getExistingFileHelper())
+            new BlockStateCompositeProvider(providers, packOutput, event.getExistingFileHelper())
         );
         generator.addProvider(
             event.includeClient(),
-            new ItemModelsProvider(providers, packOutput, event.getExistingFileHelper())
+            new ItemModelCompositeProvider(providers, packOutput, event.getExistingFileHelper())
         );
         generator.addProvider(
             event.includeClient(),
-            new LanguagesProvider(providers, packOutput, "en_us")
+            new LanguageCompositeProvider(providers, packOutput, "en_us")
         );
         generator.addProvider(
             event.includeClient(),
-            new RecipesProvider(providers, packOutput)
+            new RecipeCompositeProvider(providers, packOutput)
         );
         generator.addProvider(
             event.includeServer(),
@@ -49,7 +46,7 @@ public class DataGeneration {
                 Collections.emptySet(),
                 List.of(
                     new LootTableProvider.SubProviderEntry(
-                        new LootTablesProvider(providers),
+                        new LootTableCompositeProvider(providers),
                         LootContextParamSets.BLOCK
                     )
                 )

@@ -5,16 +5,13 @@ import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class LootTablesProvider extends VanillaBlockLoot implements Supplier<LootTableSubProvider> {
-    private final DataGenerationProvider[] providers;
+public class LootTableCompositeProvider extends VanillaBlockLoot implements Supplier<LootTableSubProvider> {
+    private final Iterable<DataProvider> providers;
 
-    public LootTablesProvider(DataGenerationProvider[] providers) {
+    public LootTableCompositeProvider(Iterable<DataProvider> providers) {
         super();
         this.providers = providers;
     }
@@ -33,9 +30,9 @@ public class LootTablesProvider extends VanillaBlockLoot implements Supplier<Loo
     @Nonnull
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return Arrays.stream(providers)
+        return StreamSupport.stream(providers.spliterator(), false)
             .flatMap(provider -> StreamSupport.stream(provider.getKnownBlocks().spliterator(), false))
-            .collect(Collectors.toCollection(ArrayList::new));
+            ::iterator;
     }
 
     @Override

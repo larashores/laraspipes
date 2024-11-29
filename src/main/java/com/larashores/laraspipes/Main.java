@@ -1,7 +1,10 @@
 package com.larashores.laraspipes;
 
-import com.larashores.laraspipes.datagen.DataGeneration;
+import com.larashores.laraspipes.datagen.DataGenerator;
+import com.larashores.laraspipes.itemdepositor.ItemDepositorData;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorScreen;
+import com.larashores.laraspipes.itemextractor.ItemExtractorData;
+import com.larashores.laraspipes.itempipe.ItemPipeData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -9,7 +12,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +20,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+
+import java.util.List;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -30,10 +34,17 @@ public class Main
 
     public Main()
     {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        var dataGen = new DataGenerator(
+            List.of(
+                new ItemDepositorData(),
+                new ItemExtractorData(),
+                new ItemPipeData()
+            )
+        );
 
+        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener(this::commonSetup);
-        eventBus.addListener(DataGeneration::generate);
+        eventBus.addListener(dataGen::generate);
 
         Registration.register(eventBus);
 

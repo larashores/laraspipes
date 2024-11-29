@@ -4,12 +4,12 @@ import com.larashores.laraspipes.Main;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
-public class LanguagesProvider extends LanguageProvider {
-    private final DataGenerationProvider[] providers;
+public class LanguageCompositeProvider extends LanguageProvider {
+    private final Iterable<DataProvider> providers;
     private final String locale;
 
-    public LanguagesProvider(
-        DataGenerationProvider[] providers,
+    public LanguageCompositeProvider(
+        Iterable<DataProvider> providers,
         PackOutput output,
         String locale
     ) {

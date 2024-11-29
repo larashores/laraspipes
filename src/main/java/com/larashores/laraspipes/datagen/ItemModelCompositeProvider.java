@@ -5,11 +5,11 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class ItemModelsProvider extends ItemModelProvider {
-    private final DataGenerationProvider[] providers;
+public class ItemModelCompositeProvider extends ItemModelProvider {
+    private final Iterable<DataProvider> providers;
 
-    public ItemModelsProvider(
-        DataGenerationProvider[] providers,
+    public ItemModelCompositeProvider(
+        Iterable<DataProvider> providers,
         PackOutput output,
         ExistingFileHelper existingFileHelper
     ) {

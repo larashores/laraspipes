@@ -2,8 +2,8 @@ package com.larashores.laraspipes.itemdepositor;
 
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.Registration;
-import com.larashores.laraspipes.datagen.DataGenerationProvider;
-import com.larashores.laraspipes.datagen.LootTablesProvider;
+import com.larashores.laraspipes.datagen.DataProvider;
+import com.larashores.laraspipes.datagen.LootTableCompositeProvider;
 import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Direction;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-public class ItemDepositorModels extends DataGenerationProvider {
+public class ItemDepositorData extends DataProvider {
     public void register(BlockStateProvider provider) {
         var path = Registration.DEPOSITOR.getId().getPath();
         var models = provider.models();
@@ -121,7 +121,7 @@ public class ItemDepositorModels extends DataGenerationProvider {
             .save(consumer);
     }
 
-    public void register(LootTablesProvider provider) {
+    public void register(LootTableCompositeProvider provider) {
         provider.dropSelf(Registration.DEPOSITOR.get());
     }
 
