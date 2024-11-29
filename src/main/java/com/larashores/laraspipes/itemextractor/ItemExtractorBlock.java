@@ -2,9 +2,7 @@ package com.larashores.laraspipes.itemextractor;
 
 import com.larashores.laraspipes.network.PipeNetworkDirectedBlock;
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -15,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 
-public class ItemExtractorBlock extends PipeNetworkDirectedBlock implements EntityBlock {
+public class ItemExtractorBlock extends PipeNetworkDirectedBlock<ItemExtractorEntity> {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -24,14 +22,9 @@ public class ItemExtractorBlock extends PipeNetworkDirectedBlock implements Enti
             BlockBehaviour.Properties.of()
             .noOcclusion()
             .strength(1.5F)
-            .sound(SoundType.METAL)
+            .sound(SoundType.METAL),
+            ItemExtractorEntity::new
         );
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ItemExtractorEntity(pos, state);
     }
 
     @Nullable

@@ -9,18 +9,16 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
 
-public class ItemDepositorBlock extends PipeNetworkDirectedBlock implements EntityBlock {
+public class ItemDepositorBlock extends PipeNetworkDirectedBlock<ItemDepositorEntity> implements EntityBlock {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -29,14 +27,9 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock implements Enti
             BlockBehaviour.Properties.of()
             .noOcclusion()
             .strength(1.5F)
-            .sound(SoundType.METAL)
+            .sound(SoundType.METAL),
+            ItemDepositorEntity::new
         );
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ItemDepositorEntity(pos, state);
     }
 
     @Nonnull
@@ -51,8 +44,8 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock implements Enti
         BlockHitResult trace
     ) {
         if (!level.isClientSide) {
-            BlockEntity entity = level.getBlockEntity(pos);
-            if (entity != null) {
+            var entity = level.getBlockEntity(pos);
+            if (entity instanceof ItemDepositorEntity) {
                 var menuProvider = new ItemDepositorMenuProvider(pos);
                 NetworkHooks.openScreen((ServerPlayer) player, menuProvider, entity.getBlockPos());
             }

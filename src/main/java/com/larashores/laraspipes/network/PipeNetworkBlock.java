@@ -6,6 +6,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -16,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 
-public class PipeNetworkBlock extends Block {
+public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block implements EntityBlock {
     public static final Map<Direction, BooleanProperty> CONNECTED = Map.of(
         Direction.SOUTH, BooleanProperty.create("south"),
         Direction.EAST, BooleanProperty.create("east"),
@@ -25,9 +27,14 @@ public class PipeNetworkBlock extends Block {
         Direction.UP, BooleanProperty.create("up"),
         Direction.DOWN, BooleanProperty.create("down")
     );
+    private final PipeNetworkEntityProvider<T> provider;
 
-    public PipeNetworkBlock(BlockBehaviour.Properties properties) {
+    public PipeNetworkBlock(
+        BlockBehaviour.Properties properties,
+        PipeNetworkEntityProvider<T> provider
+    ) {
         super(properties);
+        this.provider = provider;
     }
 
     public BlockState setConnectionStates(Level level, BlockPos pos, BlockState state) {
@@ -46,6 +53,12 @@ public class PipeNetworkBlock extends Block {
             state = state.setValue(property, connected);
         }
         return state;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return provider.create(pos, state);
     }
 
     @Override

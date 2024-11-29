@@ -11,9 +11,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 
-public class PipeNetworkDirectedBlock extends PipeNetworkBlock {
-    public PipeNetworkDirectedBlock(BlockBehaviour.Properties properties) {
-        super(properties);
+public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeNetworkBlock<T> {
+    public PipeNetworkDirectedBlock(
+        BlockBehaviour.Properties properties,
+        PipeNetworkEntityProvider<T> provider
+    ) {
+        super(properties, provider);
     }
 
     @Override
