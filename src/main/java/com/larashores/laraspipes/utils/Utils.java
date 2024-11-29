@@ -73,7 +73,7 @@ public class Utils {
         for (Direction direction : Direction.values()) {
             var neighborPos = pos.relative(direction);
             var neighborState = level.getBlockState(neighborPos);
-            if (neighborState.getBlock() instanceof PipeNetworkBlock block) {
+            if (neighborState.getBlock() instanceof PipeNetworkBlock<?> block) {
                 var newState = block.setConnectionStates(level, neighborPos, neighborState);
                 if (newState != neighborState) {
                     level.setBlock(neighborPos, newState, Block.UPDATE_ALL);

@@ -23,6 +23,23 @@ public abstract class PipeNetworkEntity extends BlockEntity {
         super(block, pos, state);
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level != null) {
+            PipeNetwork.discover(level, worldPosition);
+        }
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        var network = getNetwork();
+        if (network != null) {
+            network.clear();
+        }
+    }
+
     public PipeNetwork getNetwork() {
         if (network != null && !network.contains(this)) {
             network = null;
@@ -43,24 +60,6 @@ public abstract class PipeNetworkEntity extends BlockEntity {
             PipeNetwork.discover(level, pos);
         }
         return getNetwork();
-    }
-
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (level != null) {
-            PipeNetwork.discover(level, worldPosition);
-        }
-    }
-
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        var network = getNetwork();
-        if (network != null) {
-            network.clear();
-        }
     }
 
     public boolean acceptsItems() {

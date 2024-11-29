@@ -37,24 +37,6 @@ public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block impleme
         this.provider = provider;
     }
 
-    public BlockState setConnectionStates(Level level, BlockPos pos, BlockState state) {
-        var facing = state.getOptionalValue(BlockStateProperties.FACING);
-        for (var direction: Direction.values()) {
-            var property = CONNECTED.get(direction);
-            var adjacentPos = pos.relative(direction);
-            var adjacentState = level.getBlockState(adjacentPos);
-            var adjacentEntity = level.getBlockEntity(adjacentPos);
-            var adjacentFacing = adjacentState.getOptionalValue(BlockStateProperties.FACING);
-            var connected = (
-                (facing.isEmpty() || direction != facing.get())
-                && (adjacentFacing.isEmpty() || direction.getOpposite() != adjacentFacing.get())
-                && adjacentEntity instanceof PipeNetworkEntity
-            );
-            state = state.setValue(property, connected);
-        }
-        return state;
-    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -92,4 +74,23 @@ public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block impleme
         super.onRemove(state, level, pos, old, isMoving);
         Utils.setAdjacentBlockStates(level, pos);
     }
+
+    public BlockState setConnectionStates(Level level, BlockPos pos, BlockState state) {
+        var facing = state.getOptionalValue(BlockStateProperties.FACING);
+        for (var direction: Direction.values()) {
+            var property = CONNECTED.get(direction);
+            var adjacentPos = pos.relative(direction);
+            var adjacentState = level.getBlockState(adjacentPos);
+            var adjacentEntity = level.getBlockEntity(adjacentPos);
+            var adjacentFacing = adjacentState.getOptionalValue(BlockStateProperties.FACING);
+            var connected = (
+                (facing.isEmpty() || direction != facing.get())
+                    && (adjacentFacing.isEmpty() || direction.getOpposite() != adjacentFacing.get())
+                    && adjacentEntity instanceof PipeNetworkEntity
+            );
+            state = state.setValue(property, connected);
+        }
+        return state;
+    }
+
 }

@@ -42,17 +42,6 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
         tag.put(TAG_FILTERS, filters.serializeNBT());
     }
 
-    public Set<Item> getFilters() {
-        var items = new HashSet<Item>();
-        for (var slot = 0; slot < filters.getSlots(); slot++) {
-            var stack = filters.getStackInSlot(slot);
-            if (!stack.isEmpty()) {
-                items.add(stack.getItem());
-            }
-        }
-        return items;
-    }
-
     @Override
     public boolean acceptsItems() {
         return true;
@@ -64,6 +53,17 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
         if (to != null) {
             Utils.transferItems(getFilters(), from, to);
         }
+    }
+
+    public Set<Item> getFilters() {
+        var items = new HashSet<Item>();
+        for (var slot = 0; slot < filters.getSlots(); slot++) {
+            var stack = filters.getStackInSlot(slot);
+            if (!stack.isEmpty()) {
+                items.add(stack.getItem());
+            }
+        }
+        return items;
     }
 
     public int compare(PipeNetworkEntity other, BlockPos pos) {

@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 public class ItemDepositorMenuProvider implements MenuProvider {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
+
     private final BlockPos pos;
 
     public ItemDepositorMenuProvider(BlockPos pos) {
