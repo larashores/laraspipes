@@ -26,7 +26,6 @@ public class DataGeneration {
             new ItemExtractorModels(),
             new ItemPipeModels(),
         };
-
         generator.addProvider(
             event.includeClient(),
             new BlockStatesProvider(providers, packOutput, event.getExistingFileHelper())
@@ -48,7 +47,12 @@ public class DataGeneration {
             new LootTableProvider(
                 packOutput,
                 Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(LootTables::new, LootContextParamSets.BLOCK))
+                List.of(
+                    new LootTableProvider.SubProviderEntry(
+                        new LootTablesProvider(providers),
+                        LootContextParamSets.BLOCK
+                    )
+                )
             )
         );
     }

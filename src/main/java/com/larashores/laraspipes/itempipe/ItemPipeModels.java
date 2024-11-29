@@ -3,6 +3,7 @@ package com.larashores.laraspipes.itempipe;
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.Registration;
 import com.larashores.laraspipes.datagen.DataGenerationProvider;
+import com.larashores.laraspipes.datagen.LootTablesProvider;
 import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Direction;
@@ -11,10 +12,12 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class ItemPipeModels extends DataGenerationProvider {
@@ -75,5 +78,13 @@ public class ItemPipeModels extends DataGenerationProvider {
             .define('r', Items.REDSTONE)
             .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
             .save(consumer);
+    }
+
+    public void register(LootTablesProvider provider) {
+        provider.dropSelf(Registration.PIPE.get());
+    }
+
+    public Iterable<Block> getKnownBlocks() {
+        return List.of(Registration.PIPE.get());
     }
 }
