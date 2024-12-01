@@ -34,42 +34,42 @@ public class Registration {
     );
 
     // Item Pipe
-    public static final RegistryObject<Block> PIPE = BLOCKS.register(
+    public static final RegistryObject<Block> PIPE_BLOCK = BLOCKS.register(
         "item_pipe", ItemPipeBlock::new
     );
     public static final RegistryObject<Item> PIPE_ITEM = ITEMS.register(
-        "item_pipe", () -> new BlockItem(PIPE.get(), new Item.Properties())
+        "item_pipe", () -> new BlockItem(PIPE_BLOCK.get(), new Item.Properties())
     );
     @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<BlockEntityType<ItemPipeEntity>> PIPE_ENTITY = BLOCK_ENTITIES.register(
         "item_pipe",
-        () -> BlockEntityType.Builder.of(ItemPipeEntity::new, PIPE.get()).build(null)
+        () -> BlockEntityType.Builder.of(ItemPipeEntity::new, PIPE_BLOCK.get()).build(null)
     );
 
     // Item Extractor
-    public static final RegistryObject<Block> EXTRACTOR = BLOCKS.register(
+    public static final RegistryObject<Block> EXTRACTOR_BLOCK = BLOCKS.register(
         "item_extractor", ItemExtractorBlock::new
     );
     public static final RegistryObject<Item> EXTRACTOR_ITEM = ITEMS.register(
-        "item_extractor", () -> new BlockItem(EXTRACTOR.get(), new Item.Properties())
+        "item_extractor", () -> new BlockItem(EXTRACTOR_BLOCK.get(), new Item.Properties())
     );
     @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<BlockEntityType<ItemExtractorEntity>> EXTRACTOR_ENTITY = BLOCK_ENTITIES.register(
         "item_extractor",
-        () -> BlockEntityType.Builder.of(ItemExtractorEntity::new, EXTRACTOR.get()).build(null)
+        () -> BlockEntityType.Builder.of(ItemExtractorEntity::new, EXTRACTOR_BLOCK.get()).build(null)
     );
 
     // Item Depositor
-    public static final RegistryObject<Block> DEPOSITOR = BLOCKS.register(
+    public static final RegistryObject<Block> DEPOSITOR_BLOCK = BLOCKS.register(
         "item_depositor", ItemDepositorBlock::new
     );
     public static final RegistryObject<Item> DEPOSITOR_ITEM = ITEMS.register(
-        "item_depositor", () -> new BlockItem(DEPOSITOR.get(), new Item.Properties())
+        "item_depositor", () -> new BlockItem(DEPOSITOR_BLOCK.get(), new Item.Properties())
     );
     @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<BlockEntityType<ItemDepositorEntity>> DEPOSITOR_ENTITY = BLOCK_ENTITIES.register(
         "item_depositor",
-        () -> BlockEntityType.Builder.of(ItemDepositorEntity::new, DEPOSITOR.get()).build(null)
+        () -> BlockEntityType.Builder.of(ItemDepositorEntity::new, DEPOSITOR_BLOCK.get()).build(null)
     );
     public static final RegistryObject<MenuType<ItemDepositorMenu>> DEPOSITOR_MENU = MENU_TYPES.register(
         "item_depositor",

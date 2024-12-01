@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 
 public class ItemPipeData extends DataProvider {
     public void register(BlockStateProvider provider) {
-        var path = Registration.PIPE.getId().getPath();
+        var path = Registration.PIPE_BLOCK.getId().getPath();
         var models = provider.models();
         var centerBuilder = models.getBuilder("block/" + path + "_center");
         centerBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
@@ -41,7 +41,7 @@ public class ItemPipeData extends DataProvider {
             .allFaces((direction, faceBuilder) -> faceBuilder.texture("#all"))
             .end();
 
-        var blockStateBuilder = provider.getMultipartBuilder(Registration.PIPE.get());
+        var blockStateBuilder = provider.getMultipartBuilder(Registration.PIPE_BLOCK.get());
         blockStateBuilder
             .part()
             .modelFile(centerBuilder)
@@ -60,14 +60,14 @@ public class ItemPipeData extends DataProvider {
 
     public void register(ItemModelProvider provider) {
         provider.withExistingParent(
-            Registration.PIPE.getId().getPath(),
+            Registration.PIPE_BLOCK.getId().getPath(),
             provider.modLoc("block/item_pipe_center")
         );
     }
 
     public void register(LanguageProvider provider, String locale) {
         if (locale.equals("en_us")) {
-            provider.add(Registration.PIPE.get(), "Item Pipe");
+            provider.add(Registration.PIPE_BLOCK.get(), "Item Pipe");
         }
     }
 
@@ -81,10 +81,10 @@ public class ItemPipeData extends DataProvider {
     }
 
     public void register(LootTableCompositeProvider provider) {
-        provider.dropSelf(Registration.PIPE.get());
+        provider.dropSelf(Registration.PIPE_BLOCK.get());
     }
 
     public Iterable<Block> getKnownBlocks() {
-        return List.of(Registration.PIPE.get());
+        return List.of(Registration.PIPE_BLOCK.get());
     }
 }

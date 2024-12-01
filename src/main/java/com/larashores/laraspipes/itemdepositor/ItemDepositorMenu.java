@@ -67,7 +67,7 @@ public class ItemDepositorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(player.level(), pos), player, Registration.DEPOSITOR.get());
+        return stillValid(ContainerLevelAccess.create(player.level(), pos), player, Registration.DEPOSITOR_BLOCK.get());
     }
 
     private void addSlotsFilters(Player player) {

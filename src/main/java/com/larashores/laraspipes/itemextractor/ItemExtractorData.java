@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 
 public class ItemExtractorData extends DataProvider {
     public void register(BlockStateProvider provider) {
-        var path = Registration.EXTRACTOR.getId().getPath();
+        var path = Registration.EXTRACTOR_BLOCK.getId().getPath();
         var models = provider.models();
         var frontModeBuilder = models.getBuilder("block/" + path + "_front");
         frontModeBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
@@ -75,7 +75,7 @@ public class ItemExtractorData extends DataProvider {
             .allFaces((direction, faceBuilder) -> faceBuilder.texture("#pipe"))
             .end();
 
-        var blockStateBuilder = provider.getMultipartBuilder(Registration.EXTRACTOR.get());
+        var blockStateBuilder = provider.getMultipartBuilder(Registration.EXTRACTOR_BLOCK.get());
         for (var direction : Direction.values()) {
             var rotation = Utils.getRotation(direction);
             blockStateBuilder
@@ -98,14 +98,14 @@ public class ItemExtractorData extends DataProvider {
 
     public void register(ItemModelProvider provider) {
         provider.withExistingParent(
-            Registration.EXTRACTOR.getId().getPath(),
+            Registration.EXTRACTOR_BLOCK.getId().getPath(),
             provider.modLoc("block/item_extractor_front")
         );
     }
 
     public void register(LanguageProvider provider, String locale) {
         if (locale.equals("en_us")) {
-            provider.add(Registration.EXTRACTOR.get(), "Item Extractor");
+            provider.add(Registration.EXTRACTOR_BLOCK.get(), "Item Extractor");
         }
     }
 
@@ -122,10 +122,10 @@ public class ItemExtractorData extends DataProvider {
     }
 
     public void register(LootTableCompositeProvider provider) {
-        provider.dropSelf(Registration.EXTRACTOR.get());
+        provider.dropSelf(Registration.EXTRACTOR_BLOCK.get());
     }
 
     public Iterable<Block> getKnownBlocks() {
-        return List.of(Registration.EXTRACTOR.get());
+        return List.of(Registration.EXTRACTOR_BLOCK.get());
     }
 }

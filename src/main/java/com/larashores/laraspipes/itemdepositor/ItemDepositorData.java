@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 
 public class ItemDepositorData extends DataProvider {
     public void register(BlockStateProvider provider) {
-        var path = Registration.DEPOSITOR.getId().getPath();
+        var path = Registration.DEPOSITOR_BLOCK.getId().getPath();
         var models = provider.models();
         var frontModeBuilder = models.getBuilder("block/" + path + "_front");
         frontModeBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
@@ -75,7 +75,7 @@ public class ItemDepositorData extends DataProvider {
             .allFaces((direction, faceBuilder) -> faceBuilder.texture("#pipe"))
             .end();
 
-        var blockStateBuilder = provider.getMultipartBuilder(Registration.DEPOSITOR.get());
+        var blockStateBuilder = provider.getMultipartBuilder(Registration.DEPOSITOR_BLOCK.get());
         for (var direction : Direction.values()) {
             var rotation = Utils.getRotation(direction);
             blockStateBuilder
@@ -98,14 +98,14 @@ public class ItemDepositorData extends DataProvider {
 
     public void register(ItemModelProvider provider) {
         provider.withExistingParent(
-            Registration.DEPOSITOR.getId().getPath(),
+            Registration.DEPOSITOR_BLOCK.getId().getPath(),
             provider.modLoc("block/item_depositor_front")
         );
     }
 
     public void register(LanguageProvider provider, String locale) {
         if (locale.equals("en_us")) {
-            provider.add(Registration.DEPOSITOR.get(), "Item Depositor");
+            provider.add(Registration.DEPOSITOR_BLOCK.get(), "Item Depositor");
         }
     }
 
@@ -122,10 +122,10 @@ public class ItemDepositorData extends DataProvider {
     }
 
     public void register(LootTableCompositeProvider provider) {
-        provider.dropSelf(Registration.DEPOSITOR.get());
+        provider.dropSelf(Registration.DEPOSITOR_BLOCK.get());
     }
 
     public Iterable<Block> getKnownBlocks() {
-        return List.of(Registration.DEPOSITOR.get());
+        return List.of(Registration.DEPOSITOR_BLOCK.get());
     }
 }
