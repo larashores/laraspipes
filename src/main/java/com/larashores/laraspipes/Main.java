@@ -9,8 +9,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -31,32 +31,24 @@ public class Main
 
     public static final String MOD_ID = "laraspipes";
 
+    private static final IEventBus EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+    private static final DataGenerator DATA_GEN = new DataGenerator(
+        List.of(
+            new ItemDepositorData(),
+            new ItemExtractorData(),
+            new ItemPipeData()
+        )
+    );
 
     public Main()
     {
-        var dataGen = new DataGenerator(
-            List.of(
-                new ItemDepositorData(),
-                new ItemExtractorData(),
-                new ItemPipeData()
-            )
-        );
-
-        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        eventBus.addListener(dataGen::generate);
-        eventBus.addListener(Config::load);
-
-        Registration.register(eventBus);
-
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
-        eventBus.addListener(this::registerCreativeModeItems);
-
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
+        Registration.register(EVENT_BUS);
+        EVENT_BUS.addListener(DATA_GEN::generate);
+        EVENT_BUS.addListener(Config::load);
+        EVENT_BUS.addListener(this::registerCreativeModeItems);
     }
 
     private void registerCreativeModeItems(BuildCreativeModeTabContentsEvent event)
