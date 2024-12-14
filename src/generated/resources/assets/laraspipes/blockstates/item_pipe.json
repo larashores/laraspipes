@@ -2,11 +2,6 @@
   "multipart": [
     {
       "apply": {
-        "model": "laraspipes:block/item_pipe_center"
-      }
-    },
-    {
-      "apply": {
         "model": "laraspipes:block/item_pipe_side",
         "x": -90
       },
@@ -56,6 +51,11 @@
       },
       "when": {
         "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "laraspipes:block/item_pipe_center"
       }
     }
   ]

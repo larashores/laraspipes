@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.function.Consumer;
 
 
 public class ItemDepositorData extends DataProvider {
-    public void register(BlockStateProvider provider) {
+    public MultiPartBlockStateBuilder register(BlockStateProvider provider) {
         var path = Registration.DEPOSITOR_BLOCK.getId().getPath();
         var models = provider.models();
         var frontModeBuilder = models.getBuilder("block/" + path + "_front");
@@ -94,6 +95,7 @@ public class ItemDepositorData extends DataProvider {
                 .addModel()
                 .condition(ItemDepositorBlock.CONNECTED.get(direction), true);
         }
+        return blockStateBuilder;
     }
 
     public void register(ItemModelProvider provider) {
