@@ -4,22 +4,22 @@
     {
       "faces": {
         "down": {
-          "texture": "#all"
+          "texture": "#pipe"
         },
         "east": {
-          "texture": "#all"
+          "texture": "#pipe"
         },
         "north": {
-          "texture": "#all"
+          "texture": "#pipe"
         },
         "south": {
-          "texture": "#all"
+          "texture": "#pipe"
         },
         "up": {
-          "texture": "#all"
+          "texture": "#pipe"
         },
         "west": {
-          "texture": "#all"
+          "texture": "#pipe"
         }
       },
       "from": [
@@ -35,6 +35,6 @@
     }
   ],
   "textures": {
-    "all": "laraspipes:block/item_pipe"
+    "pipe": "laraspipes:block/item_pipe_pipe"
   }
 }

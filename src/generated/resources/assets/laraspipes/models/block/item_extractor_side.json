@@ -35,6 +35,7 @@
     }
   ],
   "textures": {
+    "particle": "laraspipes:block/item_extractor_pipe",
     "pipe": "laraspipes:block/item_extractor_pipe"
   }
 }

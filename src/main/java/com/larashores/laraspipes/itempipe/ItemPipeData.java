@@ -28,13 +28,13 @@ public class ItemPipeData extends ItemPipeComponentData {
         var path = REGISTERED_BLOCK.getId().getPath();
         var models = provider.models();
 
-        var modelBuilder = models.getBuilder("block/" + path + "_center");
+        var modelBuilder = models.getBuilder("block/" + path);
         modelBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
-        modelBuilder.texture("all", Main.MOD_ID + ":" + ITEM_PIPE_TEXTURE);
+        modelBuilder.texture("pipe", Main.MOD_ID + ":block/" + path + "_pipe");
         modelBuilder.element()
             .from(5, 5, 5)
             .to(11, 11, 11)
-            .allFaces((direction, faceBuilder) -> faceBuilder.texture("#all"))
+            .allFaces((direction, faceBuilder) -> faceBuilder.texture("#pipe"))
             .end();
 
         var blockStateBuilder = super.register(provider);
@@ -45,7 +45,7 @@ public class ItemPipeData extends ItemPipeComponentData {
     public void register(ItemModelProvider provider) {
         provider.withExistingParent(
             Registration.PIPE_BLOCK.getId().getPath(),
-            provider.modLoc("block/item_pipe_center")
+            provider.modLoc("block/item_pipe")
         );
     }
 

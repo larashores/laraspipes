@@ -39,17 +39,17 @@
           "texture": "#vertical",
           "uv": [
             0.0,
-            10.0,
+            0.0,
             14.0,
-            16.0
+            6.0
           ]
         },
         "east": {
           "texture": "#horizontal",
           "uv": [
-            10.0,
             0.0,
-            16.0,
+            0.0,
+            6.0,
             14.0
           ]
         },
@@ -63,17 +63,17 @@
           "texture": "#vertical",
           "uv": [
             0.0,
-            0.0,
+            10.0,
             14.0,
-            6.0
+            16.0
           ]
         },
         "west": {
           "texture": "#horizontal",
           "uv": [
+            10.0,
             0.0,
-            0.0,
-            6.0,
+            16.0,
             14.0
           ]
         }
@@ -91,11 +91,10 @@
     }
   ],
   "textures": {
-    "back": "laraspipes:block/item_extractor_back",
-    "front": "laraspipes:block/item_extractor_front",
-    "horizontal": "laraspipes:block/item_extractor_side_horizontal",
-    "particle": "laraspipes:block/item_extractor_pipe",
-    "pipe": "laraspipes:block/item_extractor_pipe",
-    "vertical": "laraspipes:block/item_extractor_side_vertical"
+    "back": "laraspipes:block/item_depositor_back",
+    "front": "laraspipes:block/item_depositor_front",
+    "horizontal": "laraspipes:block/item_depositor_side_horizontal",
+    "pipe": "laraspipes:block/item_depositor_pipe",
+    "vertical": "laraspipes:block/item_depositor_side_vertical"
   }
 }
