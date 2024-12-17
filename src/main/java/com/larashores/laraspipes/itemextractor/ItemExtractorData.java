@@ -21,21 +21,14 @@ public class ItemExtractorData extends ItemPipeConnectorData {
         super(Registration.EXTRACTOR_BLOCK);
     }
 
-    public void register(ItemModelProvider provider) {
-        provider.withExistingParent(
-            Registration.EXTRACTOR_BLOCK.getId().getPath(),
-            provider.modLoc("block/item_extractor")
-        );
-    }
-
     public void register(LanguageProvider provider, String locale) {
         if (locale.equals("en_us")) {
-            provider.add(Registration.EXTRACTOR_BLOCK.get(), "Item Extractor");
+            provider.add(REGISTERED_BLOCK.get(), "Item Extractor");
         }
     }
 
     public void register(Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Registration.EXTRACTOR_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, REGISTERED_BLOCK.get())
             .pattern("i i")
             .pattern("iri")
             .pattern(" h ")
@@ -44,13 +37,5 @@ public class ItemExtractorData extends ItemPipeConnectorData {
             .define('r', Items.REDSTONE_BLOCK)
             .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
             .save(consumer);
-    }
-
-    public void register(LootTableCompositeProvider provider) {
-        provider.dropSelf(Registration.EXTRACTOR_BLOCK.get());
-    }
-
-    public Iterable<Block> getKnownBlocks() {
-        return List.of(Registration.EXTRACTOR_BLOCK.get());
     }
 }

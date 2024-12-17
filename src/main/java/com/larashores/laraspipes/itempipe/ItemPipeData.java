@@ -42,33 +42,18 @@ public class ItemPipeData extends ItemPipeComponentData {
         return blockStateBuilder;
     }
 
-    public void register(ItemModelProvider provider) {
-        provider.withExistingParent(
-            Registration.PIPE_BLOCK.getId().getPath(),
-            provider.modLoc("block/item_pipe")
-        );
-    }
-
     public void register(LanguageProvider provider, String locale) {
         if (locale.equals("en_us")) {
-            provider.add(Registration.PIPE_BLOCK.get(), "Item Pipe");
+            provider.add(REGISTERED_BLOCK.get(), "Item Pipe");
         }
     }
 
     public void register(Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Registration.PIPE_ITEM.get(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, REGISTERED_BLOCK.get(), 4)
             .pattern("iri")
             .define('i', Items.IRON_INGOT)
             .define('r', Items.REDSTONE)
             .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
             .save(consumer);
-    }
-
-    public void register(LootTableCompositeProvider provider) {
-        provider.dropSelf(Registration.PIPE_BLOCK.get());
-    }
-
-    public Iterable<Block> getKnownBlocks() {
-        return List.of(Registration.PIPE_BLOCK.get());
     }
 }

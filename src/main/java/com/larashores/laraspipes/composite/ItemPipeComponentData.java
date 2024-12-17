@@ -1,15 +1,20 @@
 package com.larashores.laraspipes.composite;
 
 import com.larashores.laraspipes.Main;
+import com.larashores.laraspipes.Registration;
 import com.larashores.laraspipes.datagen.DataProvider;
+import com.larashores.laraspipes.datagen.LootTableCompositeProvider;
 import com.larashores.laraspipes.itempipe.ItemPipeBlock;
 import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
 
 public class ItemPipeComponentData extends DataProvider {
     protected final RegistryObject<Block> REGISTERED_BLOCK;
@@ -44,5 +49,18 @@ public class ItemPipeComponentData extends DataProvider {
                 .condition(ItemPipeBlock.CONNECTED.get(direction), true);
         }
         return blockStateBuilder;
+    }
+
+    public void register(ItemModelProvider provider) {
+        var path = REGISTERED_BLOCK.getId().getPath();
+        provider.withExistingParent(path, provider.modLoc("block/" + path));
+    }
+
+    public void register(LootTableCompositeProvider provider) {
+        provider.dropSelf(REGISTERED_BLOCK.get());
+    }
+
+    public Iterable<Block> getKnownBlocks() {
+        return List.of(REGISTERED_BLOCK.get());
     }
 }
