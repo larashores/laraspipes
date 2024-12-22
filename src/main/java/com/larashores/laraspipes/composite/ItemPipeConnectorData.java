@@ -2,6 +2,8 @@ package com.larashores.laraspipes.composite;
 
 import com.larashores.laraspipes.Main;
 import com.larashores.laraspipes.utils.Utils;
+import com.larashores.laraspipes.itemdepositor.ItemDepositorBlock;
+import com.larashores.laraspipes.itemextractor.ItemExtractorBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -10,11 +12,27 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * Implements shared datagen method used by {@link ItemExtractorBlock}s and {@link ItemDepositorBlock}s.
+ */
 public class ItemPipeConnectorData extends ItemPipeComponentData {
+
+    /**
+     * Creates the datagen class.
+     *
+     * @param block The block to create datagen for.
+     */
     public ItemPipeConnectorData(RegistryObject<Block> block) {
         super(block);
     }
 
+    /**
+     * Registers the models representing the blocks connection to its associated chest.
+     *
+     * @param provider Provider to register block states with.
+     *
+     * @return Model builder that additional models can be registered with.
+     */
     public MultiPartBlockStateBuilder register(BlockStateProvider provider) {
         var path = REGISTERED_BLOCK.getId().getPath();
         var models = provider.models();

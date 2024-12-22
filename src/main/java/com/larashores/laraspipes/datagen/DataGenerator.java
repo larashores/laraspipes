@@ -9,16 +9,29 @@ import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * Datagen class that takes a list of {@link DataProvider}s and generates all of their data.
+ */
 public class DataGenerator {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private final Iterable<DataProvider> providers;
 
+    /**
+     * Creates the {@link DataGenerator}.
+     *
+     * @param providers List of providers to generate data with.
+     */
     public DataGenerator(Iterable<DataProvider> providers) {
         this.providers = providers;
     }
 
+    /**
+     * Generates data from all the specified {@link DataGenerator} classes.
+     *
+     * @param event Event that triggers datagen.
+     */
     public void generate(GatherDataEvent event) {
         var generator = event.getGenerator();
         var packOutput = generator.getPackOutput();

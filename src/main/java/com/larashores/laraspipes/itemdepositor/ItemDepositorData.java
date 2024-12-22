@@ -12,17 +12,34 @@ import net.minecraftforge.common.data.LanguageProvider;
 import java.util.function.Consumer;
 
 
+/**
+ * Datagen for the {@link ItemDepositorBlock} class.
+ */
 public class ItemDepositorData extends ItemPipeConnectorData {
+    /**
+     * Creates the datagen class.
+     */
     public ItemDepositorData() {
         super(Registration.DEPOSITOR_BLOCK);
     }
 
+    /**
+     * Registers the language data for the {@link ItemDepositorBlock}.
+     *
+     * @param provider Provider to register language data with.
+     * @param locale Locale to register.
+     */
     public void register(LanguageProvider provider, String locale) {
         if (locale.equals("en_us")) {
             provider.add(REGISTERED_BLOCK.get(), "Item Depositor");
         }
     }
 
+    /**
+     * Registers recipes for the {@link ItemDepositorBlock}.
+     *
+     * @param consumer Consumer to register recipes in.
+     */
     public void register(Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, REGISTERED_BLOCK.get())
             .pattern(" h ")

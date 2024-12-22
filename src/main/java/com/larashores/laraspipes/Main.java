@@ -15,14 +15,13 @@ import org.slf4j.Logger;
 import java.util.List;
 
 
-// The value here should match an entry in the META-INF/mods.toml file
+/**
+ * Main class used for running the mod and datagen. See the {@link Main()} method.
+ */
 @Mod(Main.MOD_ID)
-public class Main
-{
+public class Main {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    public static final String MOD_ID = "laraspipes";
 
     private static final IEventBus EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
     private static final DataGenerator DATA_GEN = new DataGenerator(
@@ -33,9 +32,13 @@ public class Main
         )
     );
 
-    public Main()
-    {
-        // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
+    /** Name of the mod. */
+    public static final String MOD_ID = "laraspipes";
+
+    /**
+     * Main entrypoint of the class. Registers all event listeners.
+     */
+    public Main() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         Registration.register(EVENT_BUS);

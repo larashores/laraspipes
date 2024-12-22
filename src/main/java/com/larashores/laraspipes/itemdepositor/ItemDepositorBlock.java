@@ -1,5 +1,6 @@
 package com.larashores.laraspipes.itemdepositor;
 
+import com.larashores.laraspipes.itempipe.ItemPipeBlock;
 import com.larashores.laraspipes.network.PipeNetworkDirectedBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -18,10 +19,17 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 
 
+/**
+ * Block that can connect to accept items transferred through {@link ItemPipeBlock}s. See {@link ItemDepositorEntity}
+ * for more details on its behavior.
+ */
 public class ItemDepositorBlock extends PipeNetworkDirectedBlock<ItemDepositorEntity> implements EntityBlock {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    /**
+     * Creates the {@link ItemDepositorEntity}.
+     */
     public ItemDepositorBlock() {
         super(
             BlockBehaviour.Properties.of()
@@ -32,6 +40,18 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock<ItemDepositorEn
         );
     }
 
+    /**
+     * Called when the user clicks on the entity. Opens a {@link ItemDepositorMenu} if on the client side.
+     *
+     * @param state The state of the block when clicked on.
+     * @param level The level the block belongs to.
+     * @param pos The position of the block.
+     * @param player The player who clicked on the block.
+     * @param hand The hand the player clicked on the block with.
+     * @param trace ??
+     *
+     * @return Always returns PASS.
+     */
     @Nonnull
     @Override
     @SuppressWarnings("deprecation")

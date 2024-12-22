@@ -9,12 +9,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.slf4j.Logger;
 
+/**
+ * GUI used to interact with the {@link ItemDepositorBlock}. Used to select "filters", the set of items that
+ * {@link ItemDepositorBlock}s are allowed to accept.
+ */
 public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMenu> {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private final ResourceLocation GUI = new ResourceLocation(Main.MOD_ID, "textures/gui/item_depositor.png");
 
+    /**
+     * Creates a new {@link ItemDepositorScreen}.
+     *
+     * @param menu The menu the screen is connected to.
+     * @param inventory The inventory the screen controls.
+     * @param component ??
+     */
     public ItemDepositorScreen(ItemDepositorMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
         this.imageWidth = 177;
@@ -22,12 +33,28 @@ public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMe
         this.inventoryLabelY = 127;
     }
 
+    /**
+     * Renders the foreground component of the screen.
+     *
+     * @param graphics Graphics to render with.
+     * @param x Horizontal pixel position.
+     * @param y Vertical pixel position.
+     * @param partialTicks ??
+     */
     @Override
     public void render(GuiGraphics graphics, int x, int y, float partialTicks) {
         super.render(graphics, x, y, partialTicks);
         renderTooltip(graphics, x, y);
     }
 
+    /**
+     * Renders the background component of the screen.
+     *
+     * @param graphics Graphics to render with.
+     * @param partialTicks ??
+     * @param mouseX Horizontal mouse position.
+     * @param mouseY Vertical mouse position.
+     */
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         int relX = (this.width - this.imageWidth) / 2;

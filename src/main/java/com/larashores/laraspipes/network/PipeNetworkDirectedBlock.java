@@ -11,20 +11,44 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 
+/**
+ * Block that belongs to a {@link PipeNetwork} that has a FACING property.
+ */
 public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeNetworkBlock<T> {
-    public PipeNetworkDirectedBlock(
-        BlockBehaviour.Properties properties,
-        PipeNetworkEntityProvider<T> provider
+    /**
+     * Creates a new {@link PipeNetworkDirectedBlock}.
+     *
+     * @param properties Properties to associate with the block.
+     * @param provider Provider used for creating associated {@link PipeNetworkEntity}s.
+     */
+    public PipeNetworkDirectedBlock(BlockBehaviour.Properties properties, PipeNetworkEntityProvider<T> provider
     ) {
         super(properties, provider);
     }
 
+    /**
+     * Defines all block states associated with the block. Adds the CONNECTED and FACING block states.
+     *
+     * @param builder Builder used to register block states.
+     */
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.FACING);
     }
 
+    /**
+     * Sets the initial state of the block as it is placed. Sets the FACING block state based on the following rules:
+     * If the player is holding the shift key, the block will face the player's looking direction. Otherwise, if there
+     * is a chest adjacent to the block being placed, the block will face the direction of the chest. Otherwise, if
+     * there is an adjacent {@link PipeNetworkBlock}, the block will face it. Otherwise, the block will face the
+     * player's looking direction. Additionally, sets the CONNECTED block states. See
+     * {@link PipeNetworkBlock#getStateForPlacement} for details.
+     *
+     * @param context Details on how the block was placed.
+     *
+     * @return The initial block state.
+     */
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

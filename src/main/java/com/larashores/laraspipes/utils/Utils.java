@@ -18,10 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Collection of various status methods for use by other classes.
+ */
 public class Utils {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    /**
+     * Given a Level and BlockPos, checks to see if there is a Block with a FACING property. If so, checks to see
+     * if there is a Chest in the direction the Block is facing and returns its container if so.
+     *
+     * @param level The level the BlockPos belongs to.
+     * @param pos The BlockPos to check for adjacent chests from.
+     *
+     * @return The container of the adjacent chest.
+     */
     public static Container getFacingChest(Level level, BlockPos pos) {
         var state = level.getBlockState(pos);
         var facing = state.getOptionalValue(BlockStateProperties.FACING);
@@ -42,6 +54,13 @@ public class Utils {
         return null;
     }
 
+    /**
+     * Transfers as many items as possible from a source container to a destination chest.
+     *
+     * @param filters If specified, only transfers items in the set of filters. Otherwise, transfers all types of items.
+     * @param from The container to remove items from.
+     * @param to The container to transfer items to.
+     */
     public static void transferItems(Set<Item> filters, Container from, Container to) {
         for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
             var fromStack = from.getItem(i);
@@ -61,7 +80,13 @@ public class Utils {
         }
     }
 
-    // Returns amount of rotation needed to turn a block to face a direction, assuming North is no rotation.
+    /**
+     * Returns the amount of rotation needed to turn a south facing block to face a direction.
+     *
+     * @param direction The direction to face.
+     *
+     * @return The x and y degrees needed to rotate the block to face the specified direction
+     */
     public static ScreenRotation getRotation(Direction direction) {
         return new ScreenRotation(
             direction == Direction.UP ? 90 : direction == Direction.DOWN ? -90 : 0,
@@ -69,7 +94,14 @@ public class Utils {
         );
     }
 
-    public static void setAdjacentBlockStates(Level level, BlockPos pos) {
+    /**
+     * Updates the block states of all {@link PipeNetworkBlock}'s relative to a given BlockPos. Used when
+     * creating/destroying {@link PipeNetworkBlock}'s to update the connection states of neighboring entities.
+     *
+     * @param level The level the BlockPos belongs to.
+     * @param pos The position to set adjacent block states from.
+     */
+    public static void setAdjacentBlockConnections(Level level, BlockPos pos) {
         for (Direction direction : Direction.values()) {
             var neighborPos = pos.relative(direction);
             var neighborState = level.getBlockState(neighborPos);
@@ -82,13 +114,22 @@ public class Utils {
         }
     }
 
+    /**
+     * Given a direction, returns a list of all directions sorted relative to the specified direction in this order: the
+     * direction, left of the direction, right of the direction, above the direction, below the direction, and the
+     * opposite direction.
+     *
+     * @param direction The sort direction.
+     *
+     * @return List of directions sorted by the specified sort direction.
+     */
     public static List<Direction> getDirections(Direction direction) {
         var directions = new ArrayList<Direction>();
         directions.add(direction);
         for (var axis : Direction.Axis.values()) {
             if (axis != direction.getAxis()) {
-                directions.add(direction.getClockWise(axis));
                 directions.add(direction.getCounterClockWise(axis));
+                directions.add(direction.getClockWise(axis));
             }
         }
         directions.add(direction.getOpposite());
