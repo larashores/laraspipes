@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -70,7 +71,10 @@ public class Utils {
                     if (toStack.isEmpty()) {
                         var stack = fromStack.copyAndClear();
                         to.setItem(j, stack);
-                    } else if (fromStack.getItem() == toStack.getItem() && fromStack.getTag() == toStack.getTag()) {
+                    } else if (
+                        Objects.equals(fromStack.getItem(), toStack.getItem())
+                        && Objects.equals(fromStack.getTag(), toStack.getTag())
+                    ) {
                         var count = Math.min(fromStack.getCount(), toStack.getMaxStackSize() - toStack.getCount());
                         toStack.grow(count);
                         fromStack.shrink(count);
