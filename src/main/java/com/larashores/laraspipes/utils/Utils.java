@@ -1,13 +1,11 @@
 package com.larashores.laraspipes.utils;
 
-import com.larashores.laraspipes.network.PipeNetworkBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -96,26 +94,6 @@ public class Utils {
             direction == Direction.UP ? 90 : direction == Direction.DOWN ? -90 : 0,
             direction.getAxis().isVertical() ? 0 : (int) direction.toYRot() % 360
         );
-    }
-
-    /**
-     * Updates the block states of all {@link PipeNetworkBlock}'s relative to a given BlockPos. Used when
-     * creating/destroying {@link PipeNetworkBlock}'s to update the connection states of neighboring entities.
-     *
-     * @param level The level the BlockPos belongs to.
-     * @param pos The position to set adjacent block states from.
-     */
-    public static void setAdjacentBlockConnections(Level level, BlockPos pos) {
-        for (Direction direction : Direction.values()) {
-            var neighborPos = pos.relative(direction);
-            var neighborState = level.getBlockState(neighborPos);
-            if (neighborState.getBlock() instanceof PipeNetworkBlock<?> block) {
-                var newState = block.setConnectionStates(level, neighborPos, neighborState);
-                if (newState != neighborState) {
-                    level.setBlock(neighborPos, newState, Block.UPDATE_ALL);
-                }
-            }
-        }
     }
 
     /**

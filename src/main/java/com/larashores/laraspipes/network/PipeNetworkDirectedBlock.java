@@ -1,6 +1,7 @@
 package com.larashores.laraspipes.network;
 
 import com.larashores.laraspipes.utils.Utils;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -80,5 +81,19 @@ public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeN
             state = state.setValue(CONNECTED.get(facing), false);
         }
         return state;
+    }
+
+    /**
+     * Determines whether another {@link PipeNetworkBlock} can connect to this block along the specified direction. A
+     * connection can always be made as long as the block is not facing that direction.
+     *
+     * @param state The state of the block.
+     * @param direction The direction to connect along.
+     *
+     * @return Whether a connection can be made.
+     */
+    public boolean canConnect(BlockState state, Direction direction) {
+        var facing = state.getValue(BlockStateProperties.FACING);
+        return facing != direction;
     }
 }
