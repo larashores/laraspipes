@@ -42,7 +42,9 @@ public class ItemTypeSlot extends SlotItemHandler {
     @Override
     @NotNull
     public ItemStack safeInsert(ItemStack stack, int count) {
-        setByPlayer(stack.copyWithCount(1));
+        var copy = stack.copyWithCount(1);
+        copy.removeTagKey("Damage");
+        setByPlayer(copy);
         return stack;
     }
 
