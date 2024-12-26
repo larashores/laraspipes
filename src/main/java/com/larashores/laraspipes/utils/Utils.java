@@ -64,18 +64,24 @@ public class Utils {
         for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
             var fromStack = from.getItem(i);
             if (filters.isEmpty() || filters.contains(fromStack.getItem())) {
+                // Try to top off any existing stacks.
                 for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
                     var toStack = to.getItem(j);
-                    if (toStack.isEmpty()) {
-                        var stack = fromStack.copyAndClear();
-                        to.setItem(j, stack);
-                    } else if (
+                    if (
                         Objects.equals(fromStack.getItem(), toStack.getItem())
                         && Objects.equals(fromStack.getTag(), toStack.getTag())
                     ) {
                         var count = Math.min(fromStack.getCount(), toStack.getMaxStackSize() - toStack.getCount());
                         toStack.grow(count);
                         fromStack.shrink(count);
+                    }
+                }
+                // Otherwise add to any empty stacks.
+                for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
+                    var toStack = to.getItem(j);
+                    if (toStack.isEmpty()) {
+                        var stack = fromStack.copyAndClear();
+                        to.setItem(j, stack);
                     }
                 }
             }
