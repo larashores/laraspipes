@@ -4,11 +4,11 @@ import com.larashores.laraspipes.utils.Utils;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -68,10 +68,12 @@ public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeN
             }
             for (var direction : Utils.getDirections(facing)) {
                 var adjPos = pos.relative(direction);
-                var adjState = level.getBlockState(adjPos);
-                if (adjState.is(Blocks.CHEST)) {
+                var adjEntity = level.getBlockEntity(adjPos);
+                if (
+                    adjEntity != null
+                    && adjEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, direction.getOpposite()).isPresent()
+                ) {
                     facing = direction;
-                    break;
                 }
             }
         }

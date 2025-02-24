@@ -9,10 +9,10 @@ import com.larashores.laraspipes.utils.Utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.slf4j.Logger;
 
@@ -83,11 +83,11 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
      * Transfers items a source chest into the chest connected to the {@link ItemDepositorEntity}, if any.
      *
      * @param level The level the container belongs to.
-     * @param from The container to transfer items out of.
+     * @param from The item handler to transfer items out of.
      */
     @Override
-    public void transferItems(Level level, Container from) {
-        var to = Utils.getFacingChest(level, worldPosition);
+    public void transferItems(Level level, IItemHandler from) {
+        var to = Utils.getFacingItemHandler(level, worldPosition);
         if (to != null) {
             Utils.transferItems(getFilters(), from, to);
         }

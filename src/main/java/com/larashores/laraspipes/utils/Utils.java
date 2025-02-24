@@ -3,15 +3,14 @@ package com.larashores.laraspipes.utils;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ChestBlock;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
 import org.slf4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,64 +25,62 @@ public class Utils {
 
     /**
      * Given a Level and BlockPos, checks to see if there is a Block with a FACING property. If so, checks to see
-     * if there is a Chest in the direction the Block is facing and returns its container if so.
+     * if there is an entity in the direction the Block is facing with an ITEM_HANDLER capability. If there is, it is
+     * returned.
      *
      * @param level The level the BlockPos belongs to.
-     * @param pos The BlockPos to check for adjacent chests from.
+     * @param pos The BlockPos to check for adjacent item handlers from.
      *
-     * @return The container of the adjacent chest.
+     * @return The adjacent item handler.
      */
-    public static Container getFacingChest(Level level, BlockPos pos) {
+    @Nullable
+    public static IItemHandler getFacingItemHandler(Level level, BlockPos pos) {
         var state = level.getBlockState(pos);
         var facing = state.getOptionalValue(BlockStateProperties.FACING);
         if (facing.isPresent()) {
+            var opposite = facing.get().getOpposite();
             var facingPos = pos.relative(facing.get());
             var facingEntity = level.getBlockEntity(facingPos);
-            var facingState = level.getBlockState(facingPos);
-            var facingBlock = facingState.getBlock();
 
-            if (
-                facingState.is(Blocks.CHEST)
-                && facingEntity instanceof ChestBlockEntity
-                && facingBlock instanceof ChestBlock chestBlock
-            ) {
-                return ChestBlock.getContainer(chestBlock, facingState, level, facingPos, false);
+            if (facingEntity != null) {
+                var capability = facingEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, opposite);
+                return capability.resolve().orElse(null);
             }
         }
         return null;
     }
 
     /**
-     * Transfers as many items as possible from a source container to a destination chest.
+     * Transfers as many items as possible from a source item handler to a destination item handler.
      *
      * @param filters If specified, only transfers items in the set of filters. Otherwise, transfers all types of items.
-     * @param from The container to remove items from.
-     * @param to The container to transfer items to.
+     * @param from The item handler to remove items from.
+     * @param to The item handler to transfer items to.
      */
-    public static void transferItems(Set<Item> filters, Container from, Container to) {
-        for (var i = 0; i < from.getContainerSize() && !from.isEmpty(); i++) {
-            var fromStack = from.getItem(i);
-            if (filters.isEmpty() || filters.contains(fromStack.getItem())) {
+    public static void transferItems(Set<Item> filters, IItemHandler from, IItemHandler to) {
+        for (var i = 0; i < from.getSlots(); i++) {
+            var limit = from.getSlotLimit(i);
+            var fromStack = from.extractItem(i, limit, true);
+            var fromCount = fromStack.getCount();
+            if (!fromStack.isEmpty() && (filters.isEmpty() || filters.contains(fromStack.getItem()))) {
                 // Try to top off any existing stacks.
-                for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
-                    var toStack = to.getItem(j);
+                for (int j = 0; j < to.getSlots() && !fromStack.isEmpty(); j++) {
+                    var toStack = to.getStackInSlot(j);
                     if (
                         Objects.equals(fromStack.getItem(), toStack.getItem())
                         && Objects.equals(fromStack.getTag(), toStack.getTag())
                     ) {
-                        var count = Math.min(fromStack.getCount(), toStack.getMaxStackSize() - toStack.getCount());
-                        toStack.grow(count);
-                        fromStack.shrink(count);
+                        fromStack = to.insertItem(j, fromStack, false);
                     }
                 }
                 // Otherwise add to any empty stacks.
-                for (int j = 0; j < to.getContainerSize() && !fromStack.isEmpty(); j++) {
-                    var toStack = to.getItem(j);
+                for (int j = 0; j < to.getSlots() && !fromStack.isEmpty(); j++) {
+                    var toStack = to.getStackInSlot(j);
                     if (toStack.isEmpty()) {
-                        var stack = fromStack.copyAndClear();
-                        to.setItem(j, stack);
+                        fromStack = to.insertItem(j, fromStack, false);
                     }
                 }
+                from.extractItem(i, fromCount - fromStack.getCount(), false);
             }
         }
     }

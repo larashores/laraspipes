@@ -2,11 +2,11 @@ package com.larashores.laraspipes.network;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.IItemHandler;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -115,9 +115,9 @@ public abstract class PipeNetworkEntity extends BlockEntity {
      * transfers items out of the specified container.
      *
      * @param level The level the container belongs to.
-     * @param from The container to transfer items out of.
+     * @param from The item handler to transfer items out of.
      */
-    public void transferItems(Level level, Container from) {
+    public void transferItems(Level level, IItemHandler from) {
 
     }
 
