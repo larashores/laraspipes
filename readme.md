@@ -6,40 +6,40 @@ Adds item pipes to Minecraft for transferring, filtering, and sorting items.
 
 ![Demo Front](https://raw.githubusercontent.com/larashores/laraspipes/main/images/demo-front.png)
 
-This is my first mod so it has a few quirks (eg. it only works with vanilla chests). If you like it please let me know and I can consider new features!
+This is my first mod so it has a few quirks (e.g. there is no way to sever the connection between pipes). If you like it please let me know and I can consider new features!
 
 ## Supported Versions
 
-This mod runs on the following Minecraft versionsccccv.
+This mod runs on the following Minecraft versions.
 - [Forge 1.20.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.1.html)
 
 ## Summary
 
 This mod adds Item Extractors and Depositors to Minecraft. Item Pipes are used to connect Item Extractors and Item
 Depositors. When an Extractor is connected to a Depositor through Pipes, the Extractor will attempt to remove items
-from its attached chest (if any) and move them through the attached Depositor to its attached chest (if any). 
+from its attached inventory (if any) and move them through the attached Depositor to its attached inventory (if any). 
 
 Item Depositors can have "filters" configured. See the Item Depositor section for more details. If an Extractor
 is connected to a Depositor with filters, only items matching the filters will be transferred.
 
 Item Extractors can be connected to multiple Depositors. This can be used to create an item "sorter". A single Extractor
-can connect to multiple Depositors. Each Depositor can be configured with a type of items (eg. blocks, tools, plants).
-This way items can be dropped of in a single chest connected to an Item Extractor, and they will be automatically be
-distributed to their correct chest through each Item Depositor and its filters.
+can connect to multiple Depositors. Each Depositor can be configured with a type of items (e.g. blocks, tools, plants).
+This way items can be dropped of in a single inventory connected to an Item Extractor, and they will be automatically be
+distributed to the correct inventory through each Item Depositor and its filters.
 
 If an Item Extractor is connected to multiple Item Depositors, items will be routed to the closest Item Depositor first,
-and only the second if the first chest is full. The exception to this is Item Depositors without filters. Items will
+and only the second if the first inventory is full. The exception to this is Item Depositors without filters. Items will
 only be routed to Item Depositors without filters if there are no Item Depositors with filters that can accept the item.
-This can be used to create an "extra" chest, that accepts items only if there are no configured Item Depositors with a
-matching filter that can accept the item. 
+This can be used to create an "extra" inventory, that accepts items only if there are no configured Item Depositors with
+a matching filter that can accept the item. 
 
 ![Demo Top](https://raw.githubusercontent.com/larashores/laraspipes/main/images/demo-top.png)
 
 ## Item Extractor
 
-Item Extractors are used for removing items from chests. The large side of the extractor must face the chest to extract
-items from. If an extractor is placed next to a chest, it will auto-face the chest regardless of the player direction.
-Item Pipes can be connected to the Extractor from any other direction.
+Item Extractors are used for removing items from inventories. The large side of the extractor must face the inventory to
+extract items from. If an extractor is placed next to an inventory, it will auto-face the inventory regardless of the
+player direction. Item Pipes can be connected to the Extractor from any other direction.
 
 ![Item Extractor Left](https://raw.githubusercontent.com/larashores/laraspipes/main/images/item-extractor-left.png)
 ![Item Extractor Right](https://raw.githubusercontent.com/larashores/laraspipes/main/images/item-extractor-right.png)
@@ -56,9 +56,9 @@ Item Extractors are made in a crafting table with the following recipe.
 
 ## Item Depositor
 
-Item Depositors are used for adding items to chests. The large side of the extractor must face the chest to add
-items from. If an extractor is placed next to a chest, it will auto-face the chest regardless of the player direction.
-Item Pipes can be connected to the Extractor from any other direction.
+Item Depositors are used for adding items to inventories. The large side of the extractor must face the inventory to add
+items from. If an extractor is placed next to an inventory, it will auto-face the inventory regardless of the player
+direction. Item Pipes can be connected to the Extractor from any other direction.
 
 ![Item Depositor Left](https://raw.githubusercontent.com/larashores/laraspipes/main/images/item-depositor-left.png)
 ![Item Depositor Right](https://raw.githubusercontent.com/larashores/laraspipes/main/images/item-depositor-right.png)
@@ -67,7 +67,7 @@ Item Pipes can be connected to the Extractor from any other direction.
 
 Right-clicking an Item Depositor will open up a menu where item "filters" can be selected. Items from the player's
 inventory can be "copied" into the Item Depositor slots to set the filters. If at least one filter is set, only items
-matching the filters can be added to the Item Depositor's chest. For example, only Cobblestone, Oak Planks, and
+matching the filters can be added to the Item Depositor's inventory. For example, only Cobblestone, Oak Planks, and
 Redstone blocks can be transferred through the below Item Depositor. If no filters are selected, all types of items can
 be transferred.
 
