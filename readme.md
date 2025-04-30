@@ -99,6 +99,24 @@ Item Pipes are made in a crafting table with the following recipe.
 
 ![Item Pipe Recipe](https://raw.githubusercontent.com/larashores/laraspipes/main/images/item-pipe-recipe.png)
 
+## Development
+
+To develop this mod using Intellij, run the `forgegradle runs/genIntellijRuns` gradle task. This will create the
+following additional gradle tasks:
+
+- `runClient`
+  - This task will run Minecraft with the mod installed. This way the mod can be tested directly in-game.
+- `runData`
+  - This will regenerate data files from the datagen configuration.
+- `runServer`
+
+The following gradle tasks may also be useful:
+
+- `build/build`
+  - This will compile the mod into a `.jar` file and place it into the `build/libs` folder.
+- `documentation/javadoc`
+  - This will update the HTML documentation from the scanned javadocs.
+
 ## Links
 
 - Curseforge: https://www.curseforge.com/minecraft/mc-mods/laras-pipes
