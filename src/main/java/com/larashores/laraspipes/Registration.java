@@ -1,5 +1,11 @@
 package com.larashores.laraspipes;
 
+import com.larashores.laraspipes.fluiddepositor.FluidDepositorBlock;
+import com.larashores.laraspipes.fluiddepositor.FluidDepositorEntity;
+import com.larashores.laraspipes.fluidextractor.FluidExtractorBlock;
+import com.larashores.laraspipes.fluidextractor.FluidExtractorEntity;
+import com.larashores.laraspipes.fluidpipe.FluidPipeBlock;
+import com.larashores.laraspipes.fluidpipe.FluidPipeEntity;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorBlock;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorEntity;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorMenu;
@@ -95,6 +101,57 @@ public class Registration {
         )
     );
 
+    // --------------------------------------- Fluid Pipe RegistryObject's ---------------------------------------------
+
+    /** Fluid Pipe Block RegistryObject. */
+    public static final RegistryObject<Block> FLUID_PIPE_BLOCK = BLOCKS.register(
+            "fluid_pipe", FluidPipeBlock::new
+    );
+    /** Fluid Pipe BlockItem RegistryObject. */
+    public static final RegistryObject<Item> FLUID_PIPE_ITEM = ITEMS.register(
+            "fluid_pipe", () -> new BlockItem(FLUID_PIPE_BLOCK.get(), new Item.Properties())
+    );
+    /** Fluid Pipe BlockEntity RegistryObject. */
+    @SuppressWarnings("ConstantConditions")
+    public static final RegistryObject<BlockEntityType<FluidPipeEntity>> FLUID_PIPE_ENTITY = BLOCK_ENTITIES.register(
+            "fluid_pipe",
+            () -> BlockEntityType.Builder.of(FluidPipeEntity::new, FLUID_PIPE_BLOCK.get()).build(null)
+    );
+
+    // ------------------------------------- Fluid Extractor RegistryObject's ------------------------------------------
+
+    /** Fluid Extractor Block RegistryObject. */
+    public static final RegistryObject<Block> FLUID_EXTRACTOR_BLOCK = BLOCKS.register(
+            "fluid_extractor", FluidExtractorBlock::new
+    );
+    /** Fluid Extractor BlockItem RegistryObject. */
+    public static final RegistryObject<Item> FLUID_EXTRACTOR_ITEM = ITEMS.register(
+            "fluid_extractor", () -> new BlockItem(FLUID_EXTRACTOR_BLOCK.get(), new Item.Properties())
+    );
+    /** Item Extractor BlockEntity RegistryObject. */
+    @SuppressWarnings("ConstantConditions")
+    public static final RegistryObject<BlockEntityType<FluidExtractorEntity>> FLUID_EXTRACTOR_ENTITY = BLOCK_ENTITIES.register(
+            "fluid_extractor",
+            () -> BlockEntityType.Builder.of(FluidExtractorEntity::new, FLUID_EXTRACTOR_BLOCK.get()).build(null)
+    );
+
+    // ------------------------------------- Fluid Depositor RegistryObject's ------------------------------------------
+
+    /** Fluid Depositor Block RegistryObject. */
+    public static final RegistryObject<Block> FLUID_DEPOSITOR_BLOCK = BLOCKS.register(
+            "fluid_depositor", FluidDepositorBlock::new
+    );
+    /** Fluid Depositor BlockItem RegistryObject. */
+    public static final RegistryObject<Item> FLUID_DEPOSITOR_ITEM = ITEMS.register(
+            "fluid_depositor", () -> new BlockItem(FLUID_DEPOSITOR_BLOCK.get(), new Item.Properties())
+    );
+    /** Fluid Depositor BlockEntity RegistryObject. */
+    @SuppressWarnings("ConstantConditions")
+    public static final RegistryObject<BlockEntityType<FluidDepositorEntity>> FLUID_DEPOSITOR_ENTITY = BLOCK_ENTITIES.register(
+            "fluid_depositor",
+            () -> BlockEntityType.Builder.of(FluidDepositorEntity::new, DEPOSITOR_BLOCK.get()).build(null)
+    );
+
     /**
      * Registers all event listeners with the mod event bus. This includes all blocks, block entities, menus, and
      * screens.
@@ -121,6 +178,9 @@ public class Registration {
             event.accept(Registration.PIPE_ITEM);
             event.accept(Registration.DEPOSITOR_ITEM);
             event.accept(Registration.EXTRACTOR_ITEM);
+            event.accept(Registration.FLUID_PIPE_ITEM);
+            event.accept(Registration.FLUID_DEPOSITOR_ITEM);
+            event.accept(Registration.FLUID_EXTRACTOR_ITEM);
         }
     }
 

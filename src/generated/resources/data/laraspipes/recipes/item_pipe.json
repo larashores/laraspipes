@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
+    "g": {
+      "item": "minecraft:glass"
     },
     "r": {
       "item": "minecraft:redstone"
     }
   },
   "pattern": [
-    "iri"
+    "grg"
   ],
   "result": {
     "count": 4,

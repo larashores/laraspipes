@@ -1,6 +1,9 @@
 com.larashores.laraspipes
 com.larashores.laraspipes.composite
 com.larashores.laraspipes.datagen
+com.larashores.laraspipes.fluiddepositor
+com.larashores.laraspipes.fluidextractor
+com.larashores.laraspipes.fluidpipe
 com.larashores.laraspipes.itemdepositor
 com.larashores.laraspipes.itemextractor
 com.larashores.laraspipes.itempipe

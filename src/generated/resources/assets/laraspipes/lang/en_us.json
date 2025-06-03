@@ -1,4 +1,7 @@
 {
+  "block.laraspipes.fluid_depositor": "Fluid Depositor",
+  "block.laraspipes.fluid_extractor": "Fluid Extractor",
+  "block.laraspipes.fluid_pipe": "Fluid Pipe",
   "block.laraspipes.item_depositor": "Item Depositor",
   "block.laraspipes.item_extractor": "Item Extractor",
   "block.laraspipes.item_pipe": "Item Pipe"

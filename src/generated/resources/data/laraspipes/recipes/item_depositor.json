@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
+    "g": {
+      "item": "minecraft:glass"
+    },
     "h": {
       "item": "minecraft:hopper"
-    },
-    "i": {
-      "item": "minecraft:iron_ingot"
     },
     "r": {
       "item": "minecraft:redstone_block"
@@ -14,8 +14,8 @@
   },
   "pattern": [
     " h ",
-    "iri",
-    "i i"
+    "grg",
+    "g g"
   ],
   "result": {
     "item": "laraspipes:item_depositor"

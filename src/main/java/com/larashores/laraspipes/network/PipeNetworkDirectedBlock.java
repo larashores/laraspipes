@@ -21,10 +21,11 @@ public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeN
      *
      * @param properties Properties to associate with the block.
      * @param provider Provider used for creating associated {@link PipeNetworkEntity}s.
+     * @param type Type of block (e.g. item, fluid). Only {@link PipeNetworkBlock}s of the same type are connectable.
      */
-    public PipeNetworkDirectedBlock(BlockBehaviour.Properties properties, PipeNetworkEntityProvider<T> provider
+    public PipeNetworkDirectedBlock(BlockBehaviour.Properties properties, PipeNetworkEntityProvider<T> provider, String type
     ) {
-        super(properties, provider);
+        super(properties, provider, type);
     }
 
     /**
@@ -60,9 +61,14 @@ public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeN
         if (player != null && !player.isShiftKeyDown()) {
             for (var direction : Utils.getDirections(facing)) {
                 var adjPos = pos.relative(direction);
-                var adjEntity = level.getBlockEntity(adjPos);
-                if (adjEntity instanceof PipeNetworkEntity) {
-                    facing = direction.getOpposite();
+                var adjState = level.getBlockState(adjPos);
+                var adjBlock = adjState.getBlock();
+                var opposite = direction.getOpposite();
+                if (
+                        adjBlock instanceof PipeNetworkBlock<?> block
+                        && block.canConnect(this, adjState, opposite)
+                ) {
+                    facing = opposite;
                     break;
                 }
             }
@@ -94,8 +100,11 @@ public class PipeNetworkDirectedBlock<T extends PipeNetworkEntity> extends PipeN
      *
      * @return Whether a connection can be made.
      */
-    public boolean canConnect(BlockState state, Direction direction) {
-        var facing = state.getValue(BlockStateProperties.FACING);
-        return facing != direction;
+    public boolean canConnect(PipeNetworkBlock<?> block, BlockState state, Direction direction) {
+        if (super.canConnect(block, state, direction)) {
+            var facing = state.getValue(BlockStateProperties.FACING);
+            return facing != direction;
+        }
+        return false;
     }
 }

@@ -31,7 +31,8 @@ public class ItemExtractorBlock extends PipeNetworkDirectedBlock<ItemExtractorEn
             .noOcclusion()
             .strength(1.5F)
             .sound(SoundType.METAL),
-            ItemExtractorEntity::new
+            ItemExtractorEntity::new,
+            "item"
         );
     }
 

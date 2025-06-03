@@ -10,6 +10,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.slf4j.Logger;
 
 
@@ -40,7 +41,7 @@ public class ItemExtractorEntity extends PipeNetworkEntity {
      */
     public void handleTick(Level level, BlockPos pos) {
         if (level.getGameTime() % 20 == 0) {
-            var itemHandler = Utils.getFacingItemHandler(level, pos);
+            var itemHandler = Utils.getFacingCapability(ForgeCapabilities.ITEM_HANDLER, level, pos);
             if (itemHandler != null) {
                 var network = getOrCreateNetwork(level, pos);
                 for (var entity : network.getItemAcceptors(pos)) {

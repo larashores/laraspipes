@@ -1,0 +1,100 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#pipe"
+        },
+        "east": {
+          "texture": "#pipe"
+        },
+        "north": {
+          "texture": "#pipe"
+        },
+        "south": {
+          "texture": "#pipe"
+        },
+        "up": {
+          "texture": "#pipe"
+        },
+        "west": {
+          "texture": "#pipe"
+        }
+      },
+      "from": [
+        5,
+        5,
+        5
+      ],
+      "to": [
+        11,
+        11,
+        11
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#vertical",
+          "uv": [
+            0.0,
+            0.0,
+            14.0,
+            6.0
+          ]
+        },
+        "east": {
+          "texture": "#horizontal",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            14.0
+          ]
+        },
+        "north": {
+          "texture": "#back"
+        },
+        "south": {
+          "texture": "#front"
+        },
+        "up": {
+          "texture": "#vertical",
+          "uv": [
+            0.0,
+            10.0,
+            14.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "#horizontal",
+          "uv": [
+            10.0,
+            0.0,
+            16.0,
+            14.0
+          ]
+        }
+      },
+      "from": [
+        1,
+        0,
+        11
+      ],
+      "to": [
+        15,
+        14,
+        17
+      ]
+    }
+  ],
+  "textures": {
+    "back": "laraspipes:block/fluid_depositor_back",
+    "front": "laraspipes:block/fluid_depositor_front",
+    "horizontal": "laraspipes:block/fluid_depositor_side_horizontal",
+    "pipe": "laraspipes:block/fluid_depositor_pipe",
+    "vertical": "laraspipes:block/fluid_depositor_side_vertical"
+  }
+}

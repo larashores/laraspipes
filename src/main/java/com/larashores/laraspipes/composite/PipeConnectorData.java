@@ -12,17 +12,19 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Objects;
+
 /**
  * Implements shared datagen method used by {@link ItemExtractorBlock}s and {@link ItemDepositorBlock}s.
  */
-public class ItemPipeConnectorData extends ItemPipeComponentData {
+public class PipeConnectorData extends PipeComponentData {
 
     /**
      * Creates the datagen class.
      *
      * @param block The block to create datagen for.
      */
-    public ItemPipeConnectorData(RegistryObject<Block> block) {
+    public PipeConnectorData(RegistryObject<Block> block) {
         super(block);
     }
 
@@ -34,11 +36,11 @@ public class ItemPipeConnectorData extends ItemPipeComponentData {
      * @return Model builder that additional models can be registered with.
      */
     public MultiPartBlockStateBuilder register(BlockStateProvider provider) {
-        var path = REGISTERED_BLOCK.getId().getPath();
+        var path = Objects.requireNonNull(REGISTERED_BLOCK.getId()).getPath();
         var models = provider.models();
 
         var modelBuilder = models.getBuilder("block/" + path);
-        modelBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
+        modelBuilder.parent(models.getExistingFile(ResourceLocation.fromNamespaceAndPath("minecraft", "block/cube_all")));
         modelBuilder.texture("pipe", Main.MOD_ID + ":block/" + path + "_pipe");
         modelBuilder.texture("back", Main.MOD_ID + ":block/" + path + "_back");
         modelBuilder.texture("front", Main.MOD_ID + ":block/" + path + "_front");

@@ -18,6 +18,7 @@ public class PipeNetwork {
 
     private final HashSet<PipeNetworkEntity> entities = new HashSet<>();
     private final HashSet<PipeNetworkEntity> itemAcceptors = new HashSet<>();
+    private final HashSet<PipeNetworkEntity> fluidAcceptors = new HashSet<>();
 
     /**
      * Whether a {@link PipeNetworkEntity} is part of this network.
@@ -39,6 +40,9 @@ public class PipeNetwork {
         if (entity.acceptsItems()) {
             itemAcceptors.add(entity);
         }
+        if (entity.acceptsFluids()) {
+            fluidAcceptors.add(entity);
+        }
         entity.setNetwork(this);
     }
 
@@ -52,6 +56,7 @@ public class PipeNetwork {
     public void merge(PipeNetwork network, HashSet<BlockPos> seen) {
         entities.addAll(network.entities);
         itemAcceptors.addAll(network.itemAcceptors);
+        fluidAcceptors.addAll(network.fluidAcceptors);
         for (var entity: network.entities) {
             entity.setNetwork(this);
             seen.add(entity.getBlockPos());
@@ -67,6 +72,7 @@ public class PipeNetwork {
         }
         entities.clear();
         itemAcceptors.clear();
+        fluidAcceptors.clear();
     }
 
     /**
@@ -114,6 +120,20 @@ public class PipeNetwork {
      */
     public ArrayList<PipeNetworkEntity> getItemAcceptors(BlockPos pos) {
         var acceptors = new ArrayList<>(itemAcceptors);
+        acceptors.sort((e1, e2) -> e1.compare(e2, pos));
+        return acceptors;
+    }
+
+    /**
+     * Returns a sorted list of all {@link PipeNetworkEntity}s that can accept fluids. Entities that are closer to a
+     * block position are returned first in the list.
+     *
+     * @param pos The position used to sort the returned entities.
+     *
+     * @return List of PipeNetworkEntities that can accept fluids.
+     */
+    public ArrayList<PipeNetworkEntity> getFluidAcceptors(BlockPos pos) {
+        var acceptors = new ArrayList<>(fluidAcceptors);
         acceptors.sort((e1, e2) -> e1.compare(e2, pos));
         return acceptors;
     }

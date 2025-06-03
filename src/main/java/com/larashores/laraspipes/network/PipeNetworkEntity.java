@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.slf4j.Logger;
 
@@ -112,14 +113,36 @@ public abstract class PipeNetworkEntity extends BlockEntity {
 
     /**
      * If the {@link #acceptsItems()} method of a child class True, this method should be implemented such that it
-     * transfers items out of the specified container.
+     * transfers items out of the specified {@link IItemHandler}.
      *
      * @param level The level the container belongs to.
-     * @param from The item handler to transfer items out of.
+     * @param from The {@link IItemHandler} to transfer items out of.
      */
     public void transferItems(Level level, IItemHandler from) {
 
     }
+
+    /**
+     * Meant to be defined by child classes. Determines if the entity can accept fluids from within a
+     * {@link PipeNetwork}.
+     *
+     * @return Whether the entity can accept fluids.
+     */
+    public boolean acceptsFluids() {
+        return false;
+    }
+
+    /**
+     * If the {@link #acceptsFluids()} method of a child class True, this method should be implemented such that it
+     * transfers fluids out of the specified {@link IFluidHandler}.
+     *
+     * @param level The level the container belongs to.
+     * @param from The {@link IFluidHandler} to transfer fluids out of.
+     */
+    public void transferFluid(Level level, IFluidHandler from) {
+
+    }
+
 
     /**
      * Used for sorting. Compares a {@link PipeNetworkEntity} to another {@link PipeNetworkEntity} relative to a

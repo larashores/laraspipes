@@ -15,12 +15,13 @@ import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
  * Implements shared datagen methods used by {@link PipeNetworkBlock}.
  */
-public class ItemPipeComponentData extends DataProvider {
+public class PipeComponentData extends DataProvider {
     /** Block that datagen is registered with. */
     protected final RegistryObject<Block> REGISTERED_BLOCK;
 
@@ -29,7 +30,7 @@ public class ItemPipeComponentData extends DataProvider {
      *
      * @param block The block to create datagen for.
      */
-    public ItemPipeComponentData(RegistryObject<Block> block) {
+    public PipeComponentData(RegistryObject<Block> block) {
         REGISTERED_BLOCK = block;
     }
 
@@ -41,11 +42,11 @@ public class ItemPipeComponentData extends DataProvider {
      * @return Model builder that additional models can be registered with.
      */
     public MultiPartBlockStateBuilder register(BlockStateProvider provider) {
-        var path = REGISTERED_BLOCK.getId().getPath();
+        var path = Objects.requireNonNull(REGISTERED_BLOCK.getId()).getPath();
         var models = provider.models();
 
         var modelBuilder = models.getBuilder("block/" + path + "_side");
-        modelBuilder.parent(models.getExistingFile(new ResourceLocation("cube_all")));
+        modelBuilder.parent(models.getExistingFile(ResourceLocation.fromNamespaceAndPath("minecraft", "block/cube_all")));
         modelBuilder.texture("particle", Main.MOD_ID + ":block/" + path + "_pipe");
         modelBuilder.texture("pipe", Main.MOD_ID + ":block/" + path + "_pipe");
         modelBuilder.element()
@@ -74,7 +75,7 @@ public class ItemPipeComponentData extends DataProvider {
      * @param provider Provider to register item models with.
      */
     public void register(ItemModelProvider provider) {
-        var path = REGISTERED_BLOCK.getId().getPath();
+        var path = Objects.requireNonNull(REGISTERED_BLOCK.getId()).getPath();
         provider.withExistingParent(path, provider.modLoc("block/" + path));
     }
 

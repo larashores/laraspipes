@@ -6,7 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.IItemHandler;
 import org.slf4j.Logger;
 
@@ -25,16 +25,18 @@ public class Utils {
 
     /**
      * Given a Level and BlockPos, checks to see if there is a Block with a FACING property. If so, checks to see
-     * if there is an entity in the direction the Block is facing with an ITEM_HANDLER capability. If there is, it is
+     * if there is an entity in the direction the Block is facing with a specified capability. If there is, it is
      * returned.
      *
+     * @param <T> The type of the capability to get.
+     * @param capability The capability to get.
      * @param level The level the BlockPos belongs to.
-     * @param pos The BlockPos to check for adjacent item handlers from.
+     * @param pos The BlockPos to check for adjacent capability from.
      *
-     * @return The adjacent item handler.
+     * @return The adjacent capability.
      */
     @Nullable
-    public static IItemHandler getFacingItemHandler(Level level, BlockPos pos) {
+    public static <T> T getFacingCapability(Capability<T> capability, Level level, BlockPos pos) {
         var state = level.getBlockState(pos);
         var facing = state.getOptionalValue(BlockStateProperties.FACING);
         if (facing.isPresent()) {
@@ -43,8 +45,8 @@ public class Utils {
             var facingEntity = level.getBlockEntity(facingPos);
 
             if (facingEntity != null) {
-                var capability = facingEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, opposite);
-                return capability.resolve().orElse(null);
+                var cap = facingEntity.getCapability(capability, opposite);
+                return cap.resolve().orElse(null);
             }
         }
         return null;

@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class ItemDepositorEntity extends PipeNetworkEntity {
      */
     @Override
     public void transferItems(Level level, IItemHandler from) {
-        var to = Utils.getFacingItemHandler(level, worldPosition);
+        var to = Utils.getFacingCapability(ForgeCapabilities.ITEM_HANDLER, level, worldPosition);
         if (to != null) {
             Utils.transferItems(getFilters(), from, to);
         }

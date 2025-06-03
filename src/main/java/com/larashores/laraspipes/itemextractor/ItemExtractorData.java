@@ -1,7 +1,7 @@
 package com.larashores.laraspipes.itemextractor;
 
 import com.larashores.laraspipes.Registration;
-import com.larashores.laraspipes.composite.ItemPipeConnectorData;
+import com.larashores.laraspipes.composite.PipeConnectorData;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 /**
  * Datagen for the {@link ItemExtractorBlock}.
  */
-public class ItemExtractorData extends ItemPipeConnectorData {
+public class ItemExtractorData extends PipeConnectorData {
     /**
      * Creates the datagen class.
      */
@@ -41,13 +41,13 @@ public class ItemExtractorData extends ItemPipeConnectorData {
      */
     public void register(Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, REGISTERED_BLOCK.get())
-            .pattern("i i")
-            .pattern("iri")
+            .pattern("g g")
+            .pattern("grg")
             .pattern(" h ")
-            .define('i', Items.IRON_INGOT)
+            .define('g', Items.GLASS)
             .define('h', Items.HOPPER)
             .define('r', Items.REDSTONE_BLOCK)
-            .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+            .unlockedBy("has_redstone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.REDSTONE))
             .save(consumer);
     }
 }

@@ -25,7 +25,8 @@ public class ItemPipeBlock extends PipeNetworkBlock<ItemPipeEntity> implements E
             .noOcclusion()
             .strength(0.5F)
             .mapColor(MapColor.STONE),
-            ItemPipeEntity::new
+            ItemPipeEntity::new,
+            "item"
         );
     }
 }

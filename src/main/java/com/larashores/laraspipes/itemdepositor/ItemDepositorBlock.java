@@ -28,7 +28,7 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock<ItemDepositorEn
     private static final Logger LOGGER = LogUtils.getLogger();
 
     /**
-     * Creates the {@link ItemDepositorEntity}.
+     * Creates the {@link ItemDepositorBlock}.
      */
     public ItemDepositorBlock() {
         super(
@@ -36,7 +36,8 @@ public class ItemDepositorBlock extends PipeNetworkDirectedBlock<ItemDepositorEn
             .noOcclusion()
             .strength(1.5F)
             .sound(SoundType.METAL),
-            ItemDepositorEntity::new
+            ItemDepositorEntity::new,
+            "item"
         );
     }
 

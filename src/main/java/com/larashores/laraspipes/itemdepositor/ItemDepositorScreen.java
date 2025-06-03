@@ -17,7 +17,7 @@ public class ItemDepositorScreen extends AbstractContainerScreen<ItemDepositorMe
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final ResourceLocation GUI = new ResourceLocation(Main.MOD_ID, "textures/gui/item_depositor.png");
+    private final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "textures/gui/item_depositor.png");
 
     /**
      * Creates a new {@link ItemDepositorScreen}.

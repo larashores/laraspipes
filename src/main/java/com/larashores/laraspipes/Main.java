@@ -1,6 +1,9 @@
 package com.larashores.laraspipes;
 
 import com.larashores.laraspipes.datagen.DataGenerator;
+import com.larashores.laraspipes.fluiddepositor.FluidDepositorData;
+import com.larashores.laraspipes.fluidextractor.FluidExtractorData;
+import com.larashores.laraspipes.fluidpipe.FluidPipeData;
 import com.larashores.laraspipes.itemdepositor.ItemDepositorData;
 import com.larashores.laraspipes.itemextractor.ItemExtractorData;
 import com.larashores.laraspipes.itempipe.ItemPipeData;
@@ -28,7 +31,10 @@ public class Main {
         List.of(
             new ItemDepositorData(),
             new ItemExtractorData(),
-            new ItemPipeData()
+            new ItemPipeData(),
+            new FluidDepositorData(),
+            new FluidExtractorData(),
+            new FluidPipeData()
         )
     );
 

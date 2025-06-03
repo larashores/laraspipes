@@ -24,6 +24,7 @@ import java.util.Map;
 public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block implements EntityBlock {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LogUtils.getLogger();
+    private final String type;
 
     private final PipeNetworkEntityProvider<T> provider;
 
@@ -45,10 +46,12 @@ public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block impleme
      *
      * @param properties Properties to associate with the block.
      * @param provider Provider used for creating associated {@link PipeNetworkEntity}s.
+     * @param type Type of block (e.g. item, fluid). Only {@link PipeNetworkBlock}s of the same type are connectable.
      */
-    public PipeNetworkBlock(BlockBehaviour.Properties properties, PipeNetworkEntityProvider<T> provider) {
+    public PipeNetworkBlock(BlockBehaviour.Properties properties, PipeNetworkEntityProvider<T> provider, String type) {
         super(properties);
         this.provider = provider;
+        this.type = type;
     }
 
     /**
@@ -178,7 +181,7 @@ public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block impleme
             var adjacentBlock = adjacentState.getBlock();
             var connected = (
                 adjacentBlock instanceof PipeNetworkBlock<?> block
-                && block.canConnect(adjacentState, direction.getOpposite())
+                && block.canConnect(this, adjacentState, direction.getOpposite())
             );
             state = state.setValue(property, connected);
         }
@@ -188,12 +191,13 @@ public class PipeNetworkBlock<T extends PipeNetworkEntity> extends Block impleme
     /**
      * Determines whether another {@link PipeNetworkBlock} can connect to this block along the specified direction.
      *
+     * @param block Block to test if this block can conect to.
      * @param state The state of the block.
      * @param direction The direction to connect along.
      *
      * @return Whether a connection can be made.
      */
-    public boolean canConnect(BlockState state, Direction direction) {
-        return true;
+    public boolean canConnect(PipeNetworkBlock<?> block, BlockState state, Direction direction) {
+        return block.type.equals(type);
     }
 }
