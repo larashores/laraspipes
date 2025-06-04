@@ -54,8 +54,8 @@ public class FluidDepositorEntity extends PipeNetworkEntity {
         var to = Utils.getFacingCapability(ForgeCapabilities.FLUID_HANDLER, level, worldPosition);
         if (to != null) {
             var tanks = from.getTanks();
-            for (var tank = 1; tank <= tanks; tank++) {
-                var stack = from.getFluidInTank(tanks);
+            for (var tank = 0; tank < tanks; tank++) {
+                var stack = from.getFluidInTank(tank);
                 var fluid = stack.getFluid();
                 var draining = new FluidStack(fluid, FluidType.BUCKET_VOLUME);
                 var drained = from.drain(draining, IFluidHandler.FluidAction.SIMULATE);
